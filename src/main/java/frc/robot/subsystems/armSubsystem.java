@@ -138,4 +138,17 @@ m_PIDRightShooter.setReference(0,ControlType.kVelocity);
 
     });
   }
+
+  public Command pre_climb_position(){
+
+    return runOnce(() ->{
+m_PIDArmRotation.setReference(1,ControlType.kPosition);
+m_PIDIntakeRotation.setReference(1,ControlType.kPosition);
+m_PIDTelescope.setReference(1,ControlType.kPosition);
+m_PIDIntakePickUpWheels.setReference(1,ControlType.kVelocity);
+m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
+m_PIDRightShooter.setReference(0,ControlType.kVelocity);
+
+    });
+  }
 }

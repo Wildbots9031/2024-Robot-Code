@@ -15,11 +15,11 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.armSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -34,11 +34,8 @@ import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import com.pathplanner.lib.auto.NamedCommands;
-//import com.pathplanner.lib.commands.PathPlannerAuto;
-//import com.pathplanner.lib.path.GoalEndState;
-//import com.pathplanner.lib.path.PathConstraints;
-//import com.pathplanner.lib.path.PathPlannerPath;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+
 
 
 /*
@@ -50,12 +47,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-
+  private final armSubsystem m_ArmSubsystem = new armSubsystem();
   private final SendableChooser<Command> autoChooser;
+ 
   
 
   // The driver's controller
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  //XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  private final CommandXboxController m_driverController = new CommandXboxController(2);
 
   
  
@@ -82,6 +81,7 @@ public class RobotContainer {
                 true, true),
             m_robotDrive));
 
+  
             
   }
 
@@ -95,10 +95,18 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kR1.value)
-        .whileTrue(new RunCommand(
-            () -> m_robotDrive.setX(),
-            m_robotDrive));
+
+    m_driverController.x().onTrue(m_ArmSubsystem.intake_position());
+    m_driverController.a().onTrue(m_ArmSubsystem.shoot_position());
+    m_driverController.b().onTrue(m_ArmSubsystem.amp_position());
+    m_driverController.x().onTrue(m_ArmSubsystem.pre_climb_position());
+
+    //new JoystickButton(m_driverController, Button.kR1.value)
+     //   .whileTrue(new RunCommand(
+     //      () -> m_robotDrive.setX(),
+     //       m_robotDrive));
+
+          
 
             SmartDashboard.putData("Example Auto", new PathPlannerAuto("Example Auto"));
 
