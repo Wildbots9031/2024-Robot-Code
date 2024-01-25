@@ -15,6 +15,7 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PS5Controller.Button;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
@@ -47,14 +48,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final armSubsystem m_ArmSubsystem = new armSubsystem();
+  //private final armSubsystem m_ArmSubsystem = new armSubsystem();
   private final SendableChooser<Command> autoChooser;
  
   
 
   // The driver's controller
-  //XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-  private final CommandXboxController m_driverController = new CommandXboxController(2);
+  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  //private final CommandXboxController m_driverController = new CommandXboxController(2);
 
   
  
@@ -96,15 +97,15 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    m_driverController.x().onTrue(m_ArmSubsystem.intake_position());
-    m_driverController.a().onTrue(m_ArmSubsystem.shoot_position());
-    m_driverController.b().onTrue(m_ArmSubsystem.amp_position());
-    m_driverController.x().onTrue(m_ArmSubsystem.pre_climb_position());
+   // m_driverController.x().onTrue(m_ArmSubsystem.intake_position());
+    //m_driverController.a().onTrue(m_ArmSubsystem.shoot_position());
+   // m_driverController.b().onTrue(m_ArmSubsystem.amp_position());
+   // m_driverController.x().onTrue(m_ArmSubsystem.pre_climb_position());
 
-    //new JoystickButton(m_driverController, Button.kR1.value)
-     //   .whileTrue(new RunCommand(
-     //      () -> m_robotDrive.setX(),
-     //       m_robotDrive));
+    new JoystickButton(m_driverController, Button.kR1.value)
+        .whileTrue(new RunCommand(
+           () -> m_robotDrive.setX(),
+            m_robotDrive));
 
           
 

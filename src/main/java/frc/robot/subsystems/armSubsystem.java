@@ -15,6 +15,7 @@ import com.revrobotics.CANSparkBase.ControlType;
 
 public class armSubsystem extends SubsystemBase {
   /** Creates a new armSubsystem. */
+  /* 
   private CANSparkMax m_armRotationMotor;
   private CANSparkMax m_armTelescopingMotor;
   private CANSparkMax m_intakeRotationMotor;
@@ -27,8 +28,10 @@ public class armSubsystem extends SubsystemBase {
   private SparkPIDController m_PIDRightShooter;
   private SparkPIDController m_PIDLeftShooter;
   private SparkPIDController m_PIDIntakePickUpWheels;
+  */
   public armSubsystem() {
 
+    /* 
    m_armRotationMotor = new CANSparkMax(1, MotorType.kBrushless);
    m_armTelescopingMotor = new CANSparkMax(2, MotorType.kBrushless);
    m_intakeRotationMotor = new CANSparkMax(3, MotorType.kBrushless);
@@ -66,6 +69,7 @@ public class armSubsystem extends SubsystemBase {
    m_PIDIntakePickUpWheels.setP(1.0);
    m_PIDIntakePickUpWheels.setI(0);
    m_PIDIntakePickUpWheels.setD(0);
+   */
 
   }
 
@@ -74,7 +78,7 @@ public class armSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public Command intake_position(){
+  /*public Command intake_position(){
 
     return runOnce(() ->{
 m_PIDArmRotation.setReference(1,ControlType.kPosition);
@@ -150,5 +154,5 @@ m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
 m_PIDRightShooter.setReference(0,ControlType.kVelocity);
 
     });
-  }
+  }*/
 }
