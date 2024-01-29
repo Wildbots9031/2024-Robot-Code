@@ -57,10 +57,10 @@ public final class Constants {
     public static final int kFrontRightDrivingCanId = 47;
     public static final int kRearRightDrivingCanId = 32;
 
-    public static final int kFrontLeftTurningCanId = 38;
-    public static final int kRearLeftTurningCanId = 16;
+    public static final int kFrontLeftTurningCanId = 30;
+    public static final int kRearLeftTurningCanId = 19;
     public static final int kFrontRightTurningCanId = 44;
-    public static final int kRearRightTurningCanId = 19;
+    public static final int kRearRightTurningCanId = 11;
 
     public static final boolean kGyroReversed = true;
   }

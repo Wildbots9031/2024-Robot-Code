@@ -11,11 +11,13 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
+import edu.wpi.first.wpilibj.DigitalInput;
+//import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 
 public class armSubsystem extends SubsystemBase {
   /** Creates a new armSubsystem. */
-  /* 
+  
   private CANSparkMax m_armRotationMotor;
   private CANSparkMax m_armTelescopingMotor;
   private CANSparkMax m_intakeRotationMotor;
@@ -28,10 +30,11 @@ public class armSubsystem extends SubsystemBase {
   private SparkPIDController m_PIDRightShooter;
   private SparkPIDController m_PIDLeftShooter;
   private SparkPIDController m_PIDIntakePickUpWheels;
-  */
+  private final DigitalInput m_noteSensor = new DigitalInput(1);
+  
   public armSubsystem() {
 
-    /* 
+     
    m_armRotationMotor = new CANSparkMax(1, MotorType.kBrushless);
    m_armTelescopingMotor = new CANSparkMax(2, MotorType.kBrushless);
    m_intakeRotationMotor = new CANSparkMax(3, MotorType.kBrushless);
@@ -69,7 +72,7 @@ public class armSubsystem extends SubsystemBase {
    m_PIDIntakePickUpWheels.setP(1.0);
    m_PIDIntakePickUpWheels.setI(0);
    m_PIDIntakePickUpWheels.setD(0);
-   */
+   
 
   }
 
@@ -78,7 +81,11 @@ public class armSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  /*public Command intake_position(){
+  public boolean holdingNote(){
+    return m_noteSensor.get();
+  }
+
+  public Command intake_position(){
 
     return runOnce(() ->{
 m_PIDArmRotation.setReference(1,ControlType.kPosition);
@@ -89,6 +96,13 @@ m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
 m_PIDRightShooter.setReference(0,ControlType.kVelocity);
 
     });
+  }
+  public Command retact_note(){
+     return runOnce(() ->{
+      m_PIDLeftShooter.setReference(1,ControlType.kVelocity);
+      m_PIDRightShooter.setReference(1,ControlType.kVelocity);
+    });
+  
   }
 
   public Command hold_position(){
@@ -117,6 +131,13 @@ m_PIDRightShooter.setReference(0,ControlType.kVelocity);
     });
   }
 
+   public Command score_note_amp(){
+    return runOnce(() ->{
+      m_PIDLeftShooter.setReference(1,ControlType.kVelocity);
+      m_PIDRightShooter.setReference(1,ControlType.kVelocity);
+    });
+  }
+
   public Command shoot_position(){
 
     return runOnce(() ->{
@@ -127,6 +148,13 @@ m_PIDIntakePickUpWheels.setReference(1,ControlType.kVelocity);
 m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
 m_PIDRightShooter.setReference(0,ControlType.kVelocity);
 
+    });
+  }
+
+   public Command shoot_note(){
+    return runOnce(() ->{
+      m_PIDLeftShooter.setReference(1,ControlType.kVelocity);
+      m_PIDRightShooter.setReference(1,ControlType.kVelocity);
     });
   }
 
@@ -143,6 +171,10 @@ m_PIDRightShooter.setReference(0,ControlType.kVelocity);
     });
   }
 
+   public Command score_note_trap(){
+    return runOnce(() ->{});
+  }
+
   public Command pre_climb_position(){
 
     return runOnce(() ->{
@@ -154,5 +186,5 @@ m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
 m_PIDRightShooter.setReference(0,ControlType.kVelocity);
 
     });
-  }*/
+  }
 }
