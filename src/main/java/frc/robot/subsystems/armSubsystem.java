@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import edu.wpi.first.wpilibj.DigitalInput;
+import frc.robot.Constants.armConstants;
 //import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 
@@ -35,12 +36,12 @@ public class armSubsystem extends SubsystemBase {
   public armSubsystem() {
 
      
-   m_armRotationMotor = new CANSparkMax(1, MotorType.kBrushless);
-   m_armTelescopingMotor = new CANSparkMax(2, MotorType.kBrushless);
-   m_intakeRotationMotor = new CANSparkMax(3, MotorType.kBrushless);
-   m_intakePickUpWheels = new CANSparkMax(4, MotorType.kBrushless);
-   m_rightShooterMotor = new CANSparkMax(5, MotorType.kBrushless);
-   m_leftShooterMotor = new CANSparkMax(6, MotorType.kBrushless);
+   m_armRotationMotor = new CANSparkMax(armConstants.armRotationMotor, MotorType.kBrushless);
+   m_armTelescopingMotor = new CANSparkMax(armConstants.armTelescopingMotor, MotorType.kBrushless);
+   m_intakeRotationMotor = new CANSparkMax(armConstants.intakeRotationMotor, MotorType.kBrushless);
+   m_intakePickUpWheels = new CANSparkMax(armConstants.intakePickUpWheels, MotorType.kBrushless);
+   m_rightShooterMotor = new CANSparkMax(armConstants.rightShooterMotor, MotorType.kBrushless);
+   m_leftShooterMotor = new CANSparkMax(armConstants.leftShooterMotor, MotorType.kBrushless);
 
    m_PIDArmRotation = m_armRotationMotor.getPIDController();
    m_PIDIntakeRotation = m_intakeRotationMotor.getPIDController();
