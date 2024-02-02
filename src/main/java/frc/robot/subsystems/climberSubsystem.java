@@ -4,15 +4,15 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import frc.robot.Constants.climbConstants;
 
-public class climberSubsystem extends PIDSubsystem {
+public class climberSubsystem extends SubsystemBase {
   /** Creates a new climberSubsystem. 
   */
   private CANSparkMax m_leftClimbMotor;
@@ -28,21 +28,6 @@ public class climberSubsystem extends PIDSubsystem {
     m_leftClimb = m_leftClimbMotor.getPIDController();
     m_rightClimb = m_rightClimbMotor.getPIDController();
 
-   /*  super(
-        // The PIDController used by the subsystem
-        new PIDController(0, 0, 0)); */
   }
-
-  @Override
-  public void useOutput(double output, double setpoint) {
-    // Use the output here
-  }
-
-  @Override
-  public double getMeasurement() {
-    // Return the process variable measurement here
-    return 0;
-  }
-
 
 }
