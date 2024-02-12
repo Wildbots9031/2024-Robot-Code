@@ -21,6 +21,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.armSubsystem;
+//import frc.robot.subsystems.climberSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -50,6 +51,7 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final armSubsystem m_ArmSubsystem = new armSubsystem();
+ // private final climberSubsystem m_ClimberSubsystem = new climberSubsystem();
   private final SendableChooser<Command> autoChooser;
  
   
@@ -99,13 +101,30 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
 
-    new Trigger(m_ArmSubsystem::holdingNote).onTrue(m_ArmSubsystem.hold_position());
+    new Trigger(m_ArmSubsystem::holdingNote).onTrue(m_ArmSubsystem.retract_note());
+  /*   new Trigger(m_ClimberSubsystem::leftHookSensor);//.onTrue(m_ClimberSubsystem.leftHookIsTouching());
+    new Trigger(m_ClimberSubsystem::rightHookSensor);//.onTrue(m_ClimberSubsystem.rightHookIsTouching());
 
-   
+    if (new Trigger(m_ClimberSubsystem::rightHookSensor).equals(true)&&(new Trigger(m_ClimberSubsystem::leftHookSensor).equals(false))&&(m_driverController.a().equals(false))){
+      m_ClimberSubsystem.rightHookIsTouching();
+    }
+
+    if (new Trigger(m_ClimberSubsystem::leftHookSensor).equals(true)&&(new Trigger(m_ClimberSubsystem::rightHookSensor).equals(false))&&(m_driverController.a().equals(false))){
+      m_ClimberSubsystem.leftHookIsTouching();
+    }
+
+    if (new Trigger(m_ClimberSubsystem::rightHookSensor).equals(true)&&(new Trigger(m_ClimberSubsystem::leftHookSensor).equals(true))&&(m_driverController.a().equals(false))){
+      m_ClimberSubsystem.climb();
+    }
+    */
+  
+   //if (m_driverController.a().equals(true)&&(m_driverController.b().equals(true))){};
+
     m_driverController.y().onTrue(m_ArmSubsystem.shoot_position());
-    m_driverController.b().onTrue(m_ArmSubsystem.amp_position());
+    m_driverController.b().onTrue(m_ArmSubsystem.hold_position());
     m_driverController.x().onTrue(m_ArmSubsystem.pre_climb_position());
-   m_driverController.a().onTrue(m_ArmSubsystem.amp_position());
+    m_driverController.a().onTrue(m_ArmSubsystem.amp_position());
+    m_driverController.start().onTrue(m_ArmSubsystem.intake_position());
 
     //new JoystickButton(m_driverController, Button.kR1.value)
        // .whileTrue(new RunCommand(

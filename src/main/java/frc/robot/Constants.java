@@ -142,18 +142,18 @@ public final class Constants {
 
   public static final class climbConstants{
 
-    public static final int leftClimbMotorCanId = 99;
-    public static final int rightClimbMotorCanId = 88;
+    public static final int leftClimbMotorCanId = 6;
+    public static final int rightClimbMotorCanId = 5;
 
   }
 
   public static final class armConstants{
 
-    public static final int armRotationMotor = 1;
-    public static final int armTelescopingMotor = 2;
-    public static final int intakeRotationMotor = 3;
-    public static final int intakePickUpWheels = 4;
-    public static final int rightShooterMotor = 5;
-    public static final int leftShooterMotor = 6;
+    public static final int armRotationMotor = 10;
+    public static final int armTelescopingMotor = 4;
+    public static final int intakeRotationMotor = 62;
+    public static final int intakePickUpWheels = 3;
+    public static final int rightShooterMotor = 2;
+    public static final int leftShooterMotor = 1;
   }  
 }

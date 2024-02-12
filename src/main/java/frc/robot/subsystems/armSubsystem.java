@@ -13,6 +13,7 @@ import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants.armConstants;
+import com.revrobotics.RelativeEncoder;
 //import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 
@@ -31,7 +32,9 @@ public class armSubsystem extends SubsystemBase {
   private SparkPIDController m_PIDRightShooter;
   private SparkPIDController m_PIDLeftShooter;
   private SparkPIDController m_PIDIntakePickUpWheels;
-  private final DigitalInput m_noteSensor = new DigitalInput(1);
+  private final DigitalInput m_noteSensor = new DigitalInput(0);
+  private final DigitalInput m_climberSensor = new DigitalInput(1);
+  private RelativeEncoder m_encoderArmRotationMotor;
   
   public armSubsystem() {
 
@@ -49,16 +52,17 @@ public class armSubsystem extends SubsystemBase {
    m_PIDRightShooter = m_rightShooterMotor.getPIDController();
    m_PIDLeftShooter = m_leftShooterMotor.getPIDController();
    m_PIDIntakePickUpWheels = m_intakePickUpWheels.getPIDController();
+   m_encoderArmRotationMotor = m_armRotationMotor.getEncoder();
 
-   m_PIDArmRotation.setP(1.0);
+   m_PIDArmRotation.setP(.1);
    m_PIDArmRotation.setI(0);
    m_PIDArmRotation.setD(0);
 
-   m_PIDIntakeRotation.setP(1.0);
+   m_PIDIntakeRotation.setP(.1);
    m_PIDIntakeRotation.setI(0);
    m_PIDIntakeRotation.setD(0);
 
-   m_PIDTelescope.setP(1.0);
+   m_PIDTelescope.setP(.3);
    m_PIDTelescope.setI(0);
    m_PIDTelescope.setD(0);
 
@@ -81,51 +85,89 @@ public class armSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-
-  public boolean holdingNote(){
+//public final boolean getAsBoolean()
+  public final boolean holdingNote(){
     return m_noteSensor.get();
+  }
+
+  public final boolean climbingButton(){
+    return m_climberSensor.get();
   }
 
   public Command intake_position(){
 
     return runOnce(() ->{
-m_PIDArmRotation.setReference(1,ControlType.kPosition);
-m_PIDIntakeRotation.setReference(1,ControlType.kPosition);
-m_PIDTelescope.setReference(1,ControlType.kPosition);
-m_PIDIntakePickUpWheels.setReference(1,ControlType.kVelocity);
+m_PIDArmRotation.setReference(-13,ControlType.kPosition);
+m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
+m_PIDIntakePickUpWheels.setReference(100,ControlType.kVelocity);
 m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
 m_PIDRightShooter.setReference(0,ControlType.kVelocity);
 
     });
   }
-  public Command retact_note(){
-     return runOnce(() ->{
-      m_PIDLeftShooter.setReference(1,ControlType.kVelocity);
-      m_PIDRightShooter.setReference(1,ControlType.kVelocity);
-    });
-  
-  }
 
-  public Command hold_position(){
+  public Command telescope_intake_position(){
 
     return runOnce(() ->{
-m_PIDArmRotation.setReference(1,ControlType.kPosition);
-m_PIDIntakeRotation.setReference(1,ControlType.kPosition);
-m_PIDTelescope.setReference(1,ControlType.kPosition);
-m_PIDIntakePickUpWheels.setReference(1,ControlType.kVelocity);
-m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
-m_PIDRightShooter.setReference(0,ControlType.kVelocity);
+  m_PIDTelescope.setReference(-9,ControlType.kPosition);
+    
+    });
+  }
+  
+  public Command telescope_hold_postion(){
+
+    return runOnce(() ->{
+  m_PIDTelescope.setReference(0,ControlType.kPosition);   
 
     });
   }
+ 
+    public Command retract_note(){
+      return runOnce(() ->{ if 
+        ((holdingNote()==true) && (m_encoderArmRotationMotor.getPosition() > -15) && (m_encoderArmRotationMotor.getPosition() < -12)) {
+        m_PIDIntakePickUpWheels.setReference(-10,ControlType.kVelocity);
+      } else {
+        m_PIDIntakePickUpWheels.setReference(0,ControlType.kVelocity);
+      }
+
+    
+ /*    m_PIDIntakeRotation.setReference(1,ControlType.kPosition);
+    m_PIDArmRotation.setReference(1,ControlType.kPosition); 
+    m_PIDTelescope.setReference(0,ControlType.kPosition);
+    m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
+    m_PIDRightShooter.setReference(0,ControlType.kVelocity);
+    */
+});
+     
+      
+      
+
+    }
+
+  
+  
+
+   public Command hold_position(){
+
+    return runOnce(() ->{
+  m_PIDArmRotation.setReference(0,ControlType.kPosition);
+  m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
+  m_PIDTelescope.setReference(0,ControlType.kPosition);
+  m_PIDIntakePickUpWheels.setReference(0,ControlType.kVelocity);
+  m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
+  m_PIDRightShooter.setReference(0,ControlType.kVelocity);
+
+    });
+  }
+
 
   public Command amp_position(){
 
     return runOnce(() ->{
-m_PIDArmRotation.setReference(1,ControlType.kPosition);
-m_PIDIntakeRotation.setReference(1,ControlType.kPosition);
-m_PIDTelescope.setReference(1,ControlType.kPosition);
-m_PIDIntakePickUpWheels.setReference(1,ControlType.kVelocity);
+m_PIDArmRotation.setReference(60,ControlType.kPosition);
+m_PIDIntakeRotation.setReference(-3,ControlType.kPosition);
+m_PIDTelescope.setReference(-4,ControlType.kPosition);
+m_PIDIntakePickUpWheels.setReference(0,ControlType.kVelocity);
 m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
 m_PIDRightShooter.setReference(0,ControlType.kVelocity);
 
@@ -134,18 +176,17 @@ m_PIDRightShooter.setReference(0,ControlType.kVelocity);
 
    public Command score_note_amp(){
     return runOnce(() ->{
-      m_PIDLeftShooter.setReference(1,ControlType.kVelocity);
-      m_PIDRightShooter.setReference(1,ControlType.kVelocity);
+m_PIDIntakePickUpWheels.setReference(-100,ControlType.kVelocity);    
     });
   }
 
   public Command shoot_position(){
 
     return runOnce(() ->{
-m_PIDArmRotation.setReference(1,ControlType.kPosition);
-m_PIDIntakeRotation.setReference(1,ControlType.kPosition);
-m_PIDTelescope.setReference(1,ControlType.kPosition);
-m_PIDIntakePickUpWheels.setReference(1,ControlType.kVelocity);
+m_PIDArmRotation.setReference(60,ControlType.kPosition);
+m_PIDIntakeRotation.setReference(-1,ControlType.kPosition);
+m_PIDTelescope.setReference(0,ControlType.kPosition);
+m_PIDIntakePickUpWheels.setReference(0,ControlType.kVelocity);
 m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
 m_PIDRightShooter.setReference(0,ControlType.kVelocity);
 
@@ -179,13 +220,15 @@ m_PIDRightShooter.setReference(0,ControlType.kVelocity);
   public Command pre_climb_position(){
 
     return runOnce(() ->{
-m_PIDArmRotation.setReference(1,ControlType.kPosition);
-m_PIDIntakeRotation.setReference(1,ControlType.kPosition);
-m_PIDTelescope.setReference(1,ControlType.kPosition);
-m_PIDIntakePickUpWheels.setReference(1,ControlType.kVelocity);
+m_PIDArmRotation.setReference(80,ControlType.kPosition);
+m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
+m_PIDTelescope.setReference(0,ControlType.kPosition);
+m_PIDIntakePickUpWheels.setReference(0,ControlType.kVelocity);
 m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
 m_PIDRightShooter.setReference(0,ControlType.kVelocity);
 
     });
   }
+
+ 
 }
