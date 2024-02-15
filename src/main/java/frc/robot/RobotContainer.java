@@ -43,7 +43,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+//import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 
 
@@ -107,7 +107,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
 
-    new Trigger(m_ArmSubsystem::holdingNote).onTrue(m_ArmSubsystem.retract_note());
+    //new Trigger(m_ArmSubsystem::holdingNote).onTrue(m_ArmSubsystem.retract_note());
   /*   new Trigger(m_ClimberSubsystem::leftHookSensor);//.onTrue(m_ClimberSubsystem.leftHookIsTouching());
     new Trigger(m_ClimberSubsystem::rightHookSensor);//.onTrue(m_ClimberSubsystem.rightHookIsTouching());
 
@@ -130,6 +130,7 @@ public class RobotContainer {
     m_driverController.b().onTrue(m_ArmSubsystem.hold_position());
     m_driverController.x().onTrue(m_ArmSubsystem.pre_climb_position());
     m_driverController.a().onTrue(m_ArmSubsystem.amp_position());
+<<<<<<< HEAD
     
     m_driverController.start().onTrue(
       parallel(
@@ -140,6 +141,10 @@ public class RobotContainer {
     .andThen
    
             (m_ArmSubsystem.intake_position())));
+=======
+    m_driverController.start().onTrue(m_ArmSubsystem.telescope_hold_postion().andThen(m_ArmSubsystem.intake_position()).andThen(m_ArmSubsystem.telescope_intake_position()));
+    m_driverController.leftTrigger().onTrue(m_ArmSubsystem.shoot_note());
+>>>>>>> a22d2001d93c830e2b7e16362d4efd228eaa7721
 
     //new JoystickButton(m_driverController, Button.kR1.value)
        // .whileTrue(new RunCommand(
