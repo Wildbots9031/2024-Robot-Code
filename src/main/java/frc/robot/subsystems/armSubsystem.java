@@ -7,6 +7,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import static edu.wpi.first.wpilibj2.command.Commands.parallel;
+import static edu.wpi.first.wpilibj2.command.Commands.waitUntil;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
@@ -34,7 +37,7 @@ public class armSubsystem extends SubsystemBase {
   private SparkPIDController m_PIDIntakePickUpWheels;
   private final DigitalInput m_noteSensor = new DigitalInput(0);
   private final DigitalInput m_climberSensor = new DigitalInput(1);
-  private RelativeEncoder m_encoderArmRotationMotor;
+  public RelativeEncoder m_encoderArmRotationMotor;
   
   public armSubsystem() {
 
@@ -90,6 +93,10 @@ public class armSubsystem extends SubsystemBase {
     return m_noteSensor.get();
   }
 
+public final boolean armEncoderPosition(){
+    return m_encoderArmRotationMotor.getPosition()==-14;
+}
+
   public final boolean climbingButton(){
     return m_climberSensor.get();
   }
@@ -121,7 +128,20 @@ m_PIDRightShooter.setReference(0,ControlType.kVelocity);
 
     });
   }
- 
+
+ /*  public Command total_intake_Position (){
+    return parallel(
+      run(
+         () ->
+        telescope_hold_postion(),
+        waitUntil(armEncoderPosition()).
+        andThen(() ->
+        intake_position()))
+
+
+    );
+  }
+ */
     public Command retract_note(){
       return runOnce(() ->{ if 
         ((holdingNote()==true) && (m_encoderArmRotationMotor.getPosition() > -15) && (m_encoderArmRotationMotor.getPosition() < -12)) {

@@ -4,6 +4,11 @@
 
 package frc.robot;
 
+import static edu.wpi.first.wpilibj2.command.Commands.parallel;
+import static edu.wpi.first.wpilibj2.command.Commands.run;
+import static edu.wpi.first.wpilibj2.command.Commands.waitUntil;
+import static edu.wpi.first.wpilibj2.command.SequentialCommandGroup.*;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -25,6 +30,7 @@ import frc.robot.subsystems.armSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
@@ -124,7 +130,16 @@ public class RobotContainer {
     m_driverController.b().onTrue(m_ArmSubsystem.hold_position());
     m_driverController.x().onTrue(m_ArmSubsystem.pre_climb_position());
     m_driverController.a().onTrue(m_ArmSubsystem.amp_position());
-    m_driverController.start().onTrue(m_ArmSubsystem.intake_position());
+    
+    m_driverController.start().onTrue(
+      parallel(
+        
+            (m_ArmSubsystem.telescope_hold_postion()), 
+
+   waitUntil(m_ArmSubsystem.armEncoderPosition())
+    .andThen
+   
+            (m_ArmSubsystem.intake_position())));
 
     //new JoystickButton(m_driverController, Button.kR1.value)
        // .whileTrue(new RunCommand(
@@ -180,6 +195,7 @@ public class RobotContainer {
       AutoBuilder.followPath(path).schedule();
     }));
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
