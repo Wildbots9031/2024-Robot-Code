@@ -14,7 +14,7 @@ import com.revrobotics.SparkPIDController;
 import frc.robot.Constants.climbConstants;
 import edu.wpi.first.wpilibj.DigitalInput;
 
-public class climberSubsystem extends SubsystemBase {
+public class ClimberSubsystem extends SubsystemBase {
   /** Creates a new climberSubsystem. 
   */
   private CANSparkMax m_leftClimbMotor;
@@ -26,7 +26,7 @@ public class climberSubsystem extends SubsystemBase {
   private final DigitalInput m_leftBassSensor = new DigitalInput(4);
   private final DigitalInput m_rightBassSensor = new DigitalInput(5);
 
-  public climberSubsystem() {
+  public ClimberSubsystem() {
 
     m_leftClimbMotor = new CANSparkMax(climbConstants.leftClimbMotorCanId, MotorType.kBrushless);
     m_rightClimbMotor = new CANSparkMax(climbConstants.rightClimbMotorCanId, MotorType.kBrushless);

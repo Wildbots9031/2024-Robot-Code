@@ -5,27 +5,24 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
 //import edu.wpi.first.wpilibj.PS5Controller.Button;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commads.AutoDriveExampleCommand;
+import frc.robot.commads.arm.MoveIntakeToPositionCommand;
+import frc.robot.commads.arm.MoveTelescopeToPositionCommand;
+import frc.robot.commads.arm.groups.SetIntakePositionCommandGroup;
+import frc.robot.commads.arm.groups.WhateverYouWantToCallThisCommandGroup;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.armSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
 //import frc.robot.subsystems.climberSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -50,7 +47,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final armSubsystem m_ArmSubsystem = new armSubsystem();
+  private final ArmSubsystem m_ArmSubsystem = new ArmSubsystem();
  // private final climberSubsystem m_ClimberSubsystem = new climberSubsystem();
   private final SendableChooser<Command> autoChooser;
  
@@ -124,7 +121,18 @@ public class RobotContainer {
     m_driverController.b().onTrue(m_ArmSubsystem.hold_position());
     m_driverController.x().onTrue(m_ArmSubsystem.pre_climb_position());
     m_driverController.a().onTrue(m_ArmSubsystem.amp_position());
-    m_driverController.start().onTrue(m_ArmSubsystem.intake_position());
+    // You can do it this way
+    m_driverController.start().onTrue(
+            new MoveTelescopeToPositionCommand(m_ArmSubsystem, 0).andThen(
+                    new SetIntakePositionCommandGroup(m_ArmSubsystem).andThen(
+                            new MoveIntakeToPositionCommand(m_ArmSubsystem, 0)
+                    )
+            )
+
+    );
+
+    //Or I like the cleaner way
+      m_driverController.start().onTrue(new WhateverYouWantToCallThisCommandGroup(m_ArmSubsystem));
 
     //new JoystickButton(m_driverController, Button.kR1.value)
        // .whileTrue(new RunCommand(
@@ -187,44 +195,11 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // Create config for trajectory
-    TrajectoryConfig config = new TrajectoryConfig(
-        AutoConstants.kMaxSpeedMetersPerSecond,
-        AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-        // Add kinematics to ensure max speed is actually obeyed
-        .setKinematics(DriveConstants.kDriveKinematics);
-
-    // An example trajectory to follow. All units in meters.
-    Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(3, 0, new Rotation2d(0)),
-        config);
-
-    var thetaController = new ProfiledPIDController(
-        AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-        exampleTrajectory,
-        m_robotDrive::getPose, // Functional interface to feed supplier
-        DriveConstants.kDriveKinematics,
-
-        // Position controllers
-        new PIDController(AutoConstants.kPXController, 0, 0),
-        new PIDController(AutoConstants.kPYController, 0, 0),
-        thetaController,
-        m_robotDrive::setModuleStates,
-        m_robotDrive);
-
-    // Reset odometry to the starting pose of the trajectory.
-    m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
-
-    // Run path following command, then stop at the end.
-    return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
+    //Also Cleaned this up for you as another example
+    Pose2d start = new Pose2d(0, 0, new Rotation2d(0));
+    List<Translation2d> passThrough =  List.of(new Translation2d(1, 1), new Translation2d(2, -1));
+    Pose2d finish = new Pose2d(3, 0, new Rotation2d(0));
+    return new AutoDriveExampleCommand(m_robotDrive, start, passThrough, finish);
   }
 
 }
