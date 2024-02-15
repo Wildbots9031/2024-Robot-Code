@@ -99,23 +99,22 @@ public class armSubsystem extends SubsystemBase {
     return runOnce(() ->{
 m_PIDArmRotation.setReference(-13,ControlType.kPosition);
 m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
-m_PIDIntakePickUpWheels.setReference(100,ControlType.kVelocity);
+m_PIDIntakePickUpWheels.setReference(1000,ControlType.kVelocity);
 m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
 m_PIDRightShooter.setReference(0,ControlType.kVelocity);
 
     });
   }
 
-  public Command telescope_intake_position(){
-
+   public Command telescope_intake_position(){
+    
     return runOnce(() ->{
   m_PIDTelescope.setReference(-9,ControlType.kPosition);
     
-    });
-  }
+   });
+  } 
   
   public Command telescope_hold_postion(){
-
     return runOnce(() ->{
   m_PIDTelescope.setReference(0,ControlType.kPosition);   
 
@@ -176,7 +175,7 @@ m_PIDRightShooter.setReference(0,ControlType.kVelocity);
 
    public Command score_note_amp(){
     return runOnce(() ->{
-m_PIDIntakePickUpWheels.setReference(-100,ControlType.kVelocity);    
+m_PIDIntakePickUpWheels.setReference(-1000,ControlType.kVelocity);    
     });
   }
 
@@ -192,9 +191,10 @@ m_PIDRightShooter.setReference(0,ControlType.kVelocity);
 
     });
   }
-
+ 
    public Command shoot_note(){
     return runOnce(() ->{
+    
       m_PIDLeftShooter.setReference(1,ControlType.kVelocity);
       m_PIDRightShooter.setReference(1,ControlType.kVelocity);
     });
