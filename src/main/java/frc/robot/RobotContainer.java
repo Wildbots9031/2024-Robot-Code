@@ -100,9 +100,10 @@ public class RobotContainer {
      * {@link JoystickButton}.
      */
     private void configureButtonBindings() {
-        if (new Trigger(m_ArmSubsystem::retract_note).getAsBoolean() && (new Trigger(m_IntakeWheels::holdingNote).equals(true))) {
+        //TODO this should work, never done it this way but I think it will now that I fixed it.
+        /*if (new Trigger(m_ArmSubsystem::retract_note).getAsBoolean() && (new Trigger(m_IntakeWheels::holdingNote).getAsBoolean())) {
             new SequentialHoldCommand(m_ArmSubsystem, m_Telescope, m_IntakeWheels);
-        }
+        }*/
 
         // new Trigger((m_ArmSubsystem::retract_note).onTrue) &&  (m_IntakeWheels::holdingNote))(new SequentialHoldCommand(m_ArmSubsystem, m_Telescope, m_IntakeWheels));
    /*  new Trigger(m_ClimberSubsystem::leftHookSensor);//.onTrue(m_ClimberSubsystem.leftHookIsTouching());
