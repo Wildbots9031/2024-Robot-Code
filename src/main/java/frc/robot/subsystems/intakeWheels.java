@@ -4,62 +4,59 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
-import frc.robot.Constants.armConstants;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
- 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.armConstants;
+
 
 public class intakeWheels extends SubsystemBase {
-  /** Creates a new intakeWheels. */
- 
-  private CANSparkMax m_intakePickupWheels;
-  private SparkPIDController m_PIDIntakePickUpWheels;
-  private final DigitalInput m_noteSensor = new DigitalInput(0);
+    /**
+     * Creates a new intakeWheels.
+     */
+
+    private CANSparkMax m_intakePickupWheels;
+    private SparkPIDController m_PIDIntakePickUpWheels;
+    private final DigitalInput m_noteSensor = new DigitalInput(0);
 
 
-  public intakeWheels() {
+    public intakeWheels() {
 
-    m_intakePickupWheels = new CANSparkMax(armConstants.intakePickUpWheels, MotorType.kBrushless);
-   
-    m_PIDIntakePickUpWheels = m_intakePickupWheels.getPIDController();
+        m_intakePickupWheels = new CANSparkMax(armConstants.intakePickUpWheels, MotorType.kBrushless);
 
-    m_PIDIntakePickUpWheels.setP(1.0);
-    m_PIDIntakePickUpWheels.setI(0);
-    m_PIDIntakePickUpWheels.setD(0);
- 
-  }
+        m_PIDIntakePickUpWheels = m_intakePickupWheels.getPIDController();
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+        m_PIDIntakePickUpWheels.setP(1.0);
+        m_PIDIntakePickUpWheels.setI(0);
+        m_PIDIntakePickUpWheels.setD(0);
 
-  public Command intake_wheels_in(){
-    return runOnce(() ->{
-    m_PIDIntakePickUpWheels.setReference(1000,ControlType.kVelocity);
-  });
-}
+    }
 
-  public Command intake_wheels_out(){
-    return runOnce(() ->{
-    m_PIDIntakePickUpWheels.setReference(-1000,ControlType.kVelocity);
-  });
-}
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+    }
 
-  public Command intake_wheels_off(){
-    return runOnce(() ->{
-    m_PIDIntakePickUpWheels.setReference(0,ControlType.kVelocity);
-  });
-}
+    public void intake_wheels_in() {
+        m_PIDIntakePickUpWheels.setReference(1000, ControlType.kVelocity);
+    }
 
-public final boolean holdingNote(){
-  return m_noteSensor.get();
-}
+
+    public void intake_wheels_out() {
+        m_PIDIntakePickUpWheels.setReference(-1000, ControlType.kVelocity);
+    }
+
+    public void intake_wheels_off() {
+
+        m_PIDIntakePickUpWheels.setReference(0, ControlType.kVelocity);
+
+    }
+
+    public final boolean holdingNote() {
+        return m_noteSensor.get();
+    }
 
 }

@@ -9,41 +9,43 @@ import frc.robot.subsystems.armSubsystem;
 
 
 public class ArmIntakeCommand extends Command {
-  /** Creates a new IntakeCommand. */
+    /**
+     * Creates a new IntakeCommand.
+     */
 
-private final armSubsystem m_armSubsystem;
+    private final armSubsystem m_armSubsystem;
 
 
-  public ArmIntakeCommand(armSubsystem arm_subsystem) {
-    // Use addRequirements() here to declare subsystem dependencies.
-this.m_armSubsystem = arm_subsystem;
+    public ArmIntakeCommand(armSubsystem arm_subsystem) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        this.m_armSubsystem = arm_subsystem;
 
-addRequirements(m_armSubsystem);
+        addRequirements(m_armSubsystem);
 
-  }
+    }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
 
-   m_armSubsystem.intake_position();
-   
-  }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
+    }
 
-       m_armSubsystem.intake_position();
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
+        m_armSubsystem.intake_position();
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return m_armSubsystem.arm_at_neg_14();
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return m_armSubsystem.arm_at_neg_14();
+    }
 }

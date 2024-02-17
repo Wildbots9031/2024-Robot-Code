@@ -9,40 +9,43 @@ import frc.robot.subsystems.intakeWheels;
 
 
 public class IntakeWheelsOff extends Command {
-  /** Creates a new IntakeWheelsOff. */
-  
-  private final intakeWheels m_intakeWheels;
-  
-  
-  public IntakeWheelsOff(intakeWheels intake_wheels) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.m_intakeWheels = intake_wheels;
+    /**
+     * Creates a new IntakeWheelsOff.
+     */
 
-    addRequirements(m_intakeWheels);
-    
-  }
+    private final intakeWheels m_intakeWheels;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
 
-    m_intakeWheels.intake_wheels_off();
-  }
+    public IntakeWheelsOff(intakeWheels intake_wheels) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        this.m_intakeWheels = intake_wheels;
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
+        addRequirements(m_intakeWheels);
+
+    }
+
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+
+
+    }
+
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
 
         m_intakeWheels.intake_wheels_off();
-  }
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

@@ -5,11 +5,9 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-//import frc.robot.IntakeCommand;
-//import frc.robot.IntakeTelescopeCommand;
 import frc.robot.subsystems.armSubsystem;
-import frc.robot.subsystems.telescope;
 import frc.robot.subsystems.intakeWheels;
+import frc.robot.subsystems.telescope;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -17,13 +15,15 @@ import frc.robot.subsystems.intakeWheels;
 
 
 public class SequentialIntakeCommandGroup extends SequentialCommandGroup {
-  /** Creates a new SequentialIntakeCommandGroup. */
-  public SequentialIntakeCommandGroup(armSubsystem m_ArmSubsystem,telescope m_Telescope, intakeWheels m_IntakeWheels) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ArmIntakeCommand(m_ArmSubsystem),
-     new IntakeTelescopeCommand(m_Telescope),
-     new IntakeWheelsIn(m_IntakeWheels)
-     );
-  }
+    /**
+     * Creates a new SequentialIntakeCommandGroup.
+     */
+    public SequentialIntakeCommandGroup(armSubsystem m_ArmSubsystem, telescope m_Telescope, intakeWheels m_IntakeWheels) {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
+        addCommands(new ArmIntakeCommand(m_ArmSubsystem),
+                new IntakeTelescopeCommand(m_Telescope),
+                new IntakeWheelsIn(m_IntakeWheels)
+        );
+    }
 }

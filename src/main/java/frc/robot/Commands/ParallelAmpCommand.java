@@ -12,12 +12,15 @@ import frc.robot.subsystems.telescope;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ParallelAmpCommand extends ParallelCommandGroup {
-  /** Creates a new ParallelAmpCommand. */
-  public ParallelAmpCommand(armSubsystem m_ArmSubsystem,telescope m_Telescope) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new AmpTelescopePostion(m_Telescope),
-    new ArmAmpPosition(m_ArmSubsystem)
-    );
-  }
+    /**
+     * Creates a new ParallelAmpCommand.
+     */
+    public ParallelAmpCommand(armSubsystem m_ArmSubsystem, telescope m_Telescope) {
+        // Add your commands in the addCommands() call, e.g.
+        // addCommands(new FooCommand(), new BarCommand());
+        addCommands(
+                new AmpTelescopePostion(m_Telescope),
+                new ArmAmpPosition(m_ArmSubsystem)
+        );
+    }
 }

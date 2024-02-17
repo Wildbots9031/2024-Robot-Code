@@ -8,38 +8,43 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.armSubsystem;
 
 public class ArmHoldPosition extends Command {
-  private final armSubsystem m_armSubsystem;
+    private final armSubsystem m_armSubsystem;
 
-  /** Creates a new HoldPosition. */
-  public ArmHoldPosition(armSubsystem arm_subsystem) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.m_armSubsystem = arm_subsystem;
+    /**
+     * Creates a new HoldPosition.
+     */
+    public ArmHoldPosition(armSubsystem arm_subsystem) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        this.m_armSubsystem = arm_subsystem;
 
-    addRequirements(m_armSubsystem);
-    
-  }
+        addRequirements(m_armSubsystem);
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
+    }
 
-    m_armSubsystem.hold_position();
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
+    }
+
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
 
         m_armSubsystem.hold_position();
-  }
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        m_armSubsystem.hold_position();
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+
+        //TODO you need to return true here at some point or this will run forever
+        return false;
+    }
 }
