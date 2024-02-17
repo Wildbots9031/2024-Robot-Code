@@ -28,7 +28,10 @@ public class ArmAmpPosition extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+   
+    m_armSubsystem.amp_position();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
