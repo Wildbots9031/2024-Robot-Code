@@ -15,12 +15,22 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Commands.ArmHoldPosition;
+import frc.robot.Commands.ArmIntakeCommand;
+import frc.robot.Commands.HoldTelescopeCommand;
+import frc.robot.Commands.IntakeWheelsOut;
+import frc.robot.Commands.ParallelAmpCommand;
+import frc.robot.Commands.RepostionNote;
+import frc.robot.Commands.SequentialHoldCommand;
+import frc.robot.Commands.SequentialIntakeCommandGroup;
 //import edu.wpi.first.wpilibj.PS5Controller.Button;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.armSubsystem;
+import frc.robot.subsystems.intakeWheels;
+import frc.robot.subsystems.telescope;
 //import frc.robot.subsystems.climberSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -37,8 +47,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-//import edu.wpi.first.wpilibj2.command.button.Trigger;
-
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 
 /*
@@ -51,6 +60,8 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final armSubsystem m_ArmSubsystem = new armSubsystem();
+  private final telescope m_Telescope = new telescope();
+  private final intakeWheels m_IntakeWheels = new intakeWheels();
  // private final climberSubsystem m_ClimberSubsystem = new climberSubsystem();
   private final SendableChooser<Command> autoChooser;
  
@@ -99,10 +110,11 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
+    if (new Trigger(m_ArmSubsystem::retract_note).equals(true) && (new Trigger(m_IntakeWheels::holdingNote).equals(true))) {new SequentialHoldCommand(m_ArmSubsystem, m_Telescope, m_IntakeWheels);
+    }
 
-
-    //new Trigger(m_ArmSubsystem::holdingNote).onTrue(m_ArmSubsystem.retract_note());
-  /*   new Trigger(m_ClimberSubsystem::leftHookSensor);//.onTrue(m_ClimberSubsystem.leftHookIsTouching());
+   // new Trigger((m_ArmSubsystem::retract_note).onTrue) &&  (m_IntakeWheels::holdingNote))(new SequentialHoldCommand(m_ArmSubsystem, m_Telescope, m_IntakeWheels));
+   /*  new Trigger(m_ClimberSubsystem::leftHookSensor);//.onTrue(m_ClimberSubsystem.leftHookIsTouching());
     new Trigger(m_ClimberSubsystem::rightHookSensor);//.onTrue(m_ClimberSubsystem.rightHookIsTouching());
 
     if (new Trigger(m_ClimberSubsystem::rightHookSensor).equals(true)&&(new Trigger(m_ClimberSubsystem::leftHookSensor).equals(false))&&(m_driverController.a().equals(false))){
@@ -115,17 +127,18 @@ public class RobotContainer {
 
     if (new Trigger(m_ClimberSubsystem::rightHookSensor).equals(true)&&(new Trigger(m_ClimberSubsystem::leftHookSensor).equals(true))&&(m_driverController.a().equals(false))){
       m_ClimberSubsystem.climb();
-    }
+    } 
     */
   
    //if (m_driverController.a().equals(true)&&(m_driverController.b().equals(true))){};
 
-    m_driverController.y().onTrue(m_ArmSubsystem.shoot_position());
-    m_driverController.b().onTrue(m_ArmSubsystem.hold_position());
-    m_driverController.x().onTrue(m_ArmSubsystem.pre_climb_position());
-    m_driverController.a().onTrue(m_ArmSubsystem.amp_position());
-    m_driverController.start().onTrue(m_ArmSubsystem.telescope_hold_postion().andThen(m_ArmSubsystem.intake_position()).andThen(m_ArmSubsystem.telescope_intake_position()));
-    m_driverController.leftTrigger().onTrue(m_ArmSubsystem.shoot_note());
+   // m_driverController.y().onTrue(m_ArmSubsystem.shoot_position());
+    m_driverController.b().onTrue(new SequentialHoldCommand(m_ArmSubsystem, m_Telescope, m_IntakeWheels));
+  //  m_driverController.x().onTrue(m_ArmSubsystem.pre_climb_position());
+    m_driverController.a().onTrue(new ParallelAmpCommand(m_ArmSubsystem, m_Telescope));
+    m_driverController.start().onTrue(new SequentialIntakeCommandGroup(m_ArmSubsystem, m_Telescope, m_IntakeWheels));
+//    m_driverController.leftTrigger().onTrue(m_ArmSubsystem.shoot_note());
+    m_driverController.rightTrigger().onTrue(new IntakeWheelsOut(m_IntakeWheels));
 
     //new JoystickButton(m_driverController, Button.kR1.value)
        // .whileTrue(new RunCommand(
