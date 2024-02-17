@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
@@ -67,14 +66,13 @@ public class armSubsystem extends SubsystemBase {
     return (m_encoderArmRotationMotor.getPosition() > 55) && (m_encoderArmRotationMotor.getPosition() < 65);
   }
 
-  public Command intake_position(){
+  public void intake_position(){
 
-    return runOnce(() ->{
 m_PIDArmRotation.setReference(-13,ControlType.kPosition);
 m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
 
-    });
-  }
+    };
+  
 
   
  
@@ -99,66 +97,58 @@ m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
   
   
 
-   public Command hold_position(){
+   public void hold_position(){
 
-    return runOnce(() ->{
   m_PIDArmRotation.setReference(0,ControlType.kPosition);
   m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
 
-    });
-  }
+    };
+  
 
 
-  public Command amp_position(){
+  public void amp_position(){
 
-    return runOnce(() ->{
 m_PIDArmRotation.setReference(60,ControlType.kPosition);
 m_PIDIntakeRotation.setReference(-3,ControlType.kPosition);
 
-    });
-  }
+    };
+  
 
-   public Command score_note_amp(){
-    return runOnce(() ->{
-    });
-  }
+   public void score_note_amp(){
+    };
+  
 
-  public Command shoot_position(){
+  public void shoot_position(){
 
-    return runOnce(() ->{
 m_PIDArmRotation.setReference(60,ControlType.kPosition);
 m_PIDIntakeRotation.setReference(-1,ControlType.kPosition);
 
-    });
-  }
+    };
+  
  
-   public Command shoot_note(){
-    return runOnce(() ->{
+   public void shoot_note(){
     
-    });
-  }
+    };
+  
 
-  public Command trap_position(){
+  public void trap_position(){
 
-    return runOnce(() ->{
 m_PIDArmRotation.setReference(1,ControlType.kPosition);
 m_PIDIntakeRotation.setReference(1,ControlType.kPosition);
 
-    });
+    };
+  
+
+   public void score_note_trap(){
   }
 
-   public Command score_note_trap(){
-    return runOnce(() ->{});
-  }
+  public void pre_climb_position(){
 
-  public Command pre_climb_position(){
-
-    return runOnce(() ->{
 m_PIDArmRotation.setReference(80,ControlType.kPosition);
 m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
 
-    });
+    };
+  
   }
-
  
-}
+

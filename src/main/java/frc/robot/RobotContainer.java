@@ -110,8 +110,8 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    if (new Trigger(m_ArmSubsystem::retract_note).equals(true) && (new Trigger(m_IntakeWheels::holdingNote).equals(true))) {new SequentialHoldCommand(m_ArmSubsystem, m_Telescope, m_IntakeWheels);
-    }
+//    if (new Trigger(m_ArmSubsystem::retract_note).equals(true) && (new Trigger(m_IntakeWheels::holdingNote).equals(true))) {new SequentialHoldCommand(m_ArmSubsystem, m_Telescope, m_IntakeWheels);
+ //   }
 
    // new Trigger((m_ArmSubsystem::retract_note).onTrue) &&  (m_IntakeWheels::holdingNote))(new SequentialHoldCommand(m_ArmSubsystem, m_Telescope, m_IntakeWheels));
    /*  new Trigger(m_ClimberSubsystem::leftHookSensor);//.onTrue(m_ClimberSubsystem.leftHookIsTouching());

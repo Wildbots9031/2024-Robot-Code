@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
@@ -39,41 +38,35 @@ public class telescope extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public Command telescope_intake_position(){
-    return runOnce(() ->{
+  public void telescope_intake_position(){
     m_PIDTelescope.setReference(-9,ControlType.kPosition); 
-   });
-  } 
+   };
+  
 
-  public Command telescope_hold_postion(){
-    return runOnce(() ->{
+  public void telescope_hold_postion(){
     m_PIDTelescope.setReference(0,ControlType.kPosition);   
-    });
-  }
+    };
+  
 
-  public Command telescope_amp_postion(){
-    return runOnce(() ->{
+  public void telescope_amp_postion(){
     m_PIDTelescope.setReference(-4,ControlType.kPosition);   
-    });
-  }
+    };
+  
 
-    public Command telescope_shoot_postion(){
-    return runOnce(() ->{
+    public void telescope_shoot_postion(){
     m_PIDTelescope.setReference(0,ControlType.kPosition);   
-    });
-  }
+    };
+  
 
-      public Command telescope_trap_postion(){
-    return runOnce(() ->{
+      public void telescope_trap_postion(){
     m_PIDTelescope.setReference(0,ControlType.kPosition);   
-    });
-  }
+    };
+  
 
-      public Command telescope_pre_climb_postion(){
-    return runOnce(() ->{
+      public void telescope_pre_climb_postion(){
     m_PIDTelescope.setReference(0,ControlType.kPosition);   
-    });
-  }
+    };
+  
 
   public final boolean telescope_at_neg_9(){
     return m_encoderTelescopeMotor.getPosition()==-9;

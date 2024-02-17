@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
@@ -40,26 +39,24 @@ public class intakeWheels extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public Command intake_wheels_in(){
-    return runOnce(() ->{
+  public void intake_wheels_in(){
     m_PIDIntakePickUpWheels.setReference(1000,ControlType.kVelocity);
-  });
-}
+  };
 
-  public Command intake_wheels_out(){
-    return runOnce(() ->{
+
+  public void intake_wheels_out(){
     m_PIDIntakePickUpWheels.setReference(-1000,ControlType.kVelocity);
-  });
-}
+  };
 
-  public Command intake_wheels_off(){
-    return runOnce(() ->{
+
+  public void intake_wheels_off(){
     m_PIDIntakePickUpWheels.setReference(0,ControlType.kVelocity);
-  });
-}
+  };
+
 
 public final boolean holdingNote(){
   return m_noteSensor.get();
+  }
 }
 
-}
+
