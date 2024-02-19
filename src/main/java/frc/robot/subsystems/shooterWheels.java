@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.Command;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
@@ -12,7 +12,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import frc.robot.Constants.armConstants;
-
+import com.revrobotics.RelativeEncoder;
 
 
 public class shooterWheels extends SubsystemBase {
@@ -24,6 +24,8 @@ public class shooterWheels extends SubsystemBase {
   private SparkPIDController m_PIDRightShooter;
   private SparkPIDController m_PIDLeftShooter;
 
+  private RelativeEncoder m_encoderRightShootMotor;
+
 
   public shooterWheels() {
 
@@ -33,11 +35,11 @@ public class shooterWheels extends SubsystemBase {
     m_PIDRightShooter = m_rightShooterMotor.getPIDController();
     m_PIDLeftShooter = m_leftShooterMotor.getPIDController();
 
-    m_PIDRightShooter.setP(1.0);
+    m_PIDRightShooter.setP(.2);
     m_PIDRightShooter.setI(0);
     m_PIDRightShooter.setD(0);
  
-    m_PIDLeftShooter.setP(1.0);
+    m_PIDLeftShooter.setP(.2);
     m_PIDLeftShooter.setI(0);
     m_PIDLeftShooter.setD(0);   
  
@@ -48,19 +50,23 @@ public class shooterWheels extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-
-public Command shootOn() {
- return runOnce(() ->{
-  m_PIDLeftShooter.setReference(-1000,ControlType.kVelocity);
-  m_PIDRightShooter.setReference(1000,ControlType.kVelocity);
-  });
+// set range for exiting ShooterWheelsOn
+public final boolean shooterVelocity(){
+  return m_encoderRightShootMotor.getVelocity()>2800;
 }
 
-public Command shootOff() {
- return runOnce(() ->{
+public void shootOn() {
+ 
+  m_PIDLeftShooter.setReference(-3000,ControlType.kVelocity);
+  m_PIDRightShooter.setReference(3000,ControlType.kVelocity);
+  
+}
+
+public void shootOff() {
+ 
   m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
   m_PIDRightShooter.setReference(0,ControlType.kVelocity);
-  });
+  
 }
 
 }

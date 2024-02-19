@@ -10,9 +10,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
+
 //import com.revrobotics.CANSparkBase.ControlType;
 import frc.robot.Constants.climbConstants;
 import edu.wpi.first.wpilibj.DigitalInput;
+import com.revrobotics.RelativeEncoder;
 
 public class climberSubsystem extends SubsystemBase {
   /** Creates a new climberSubsystem. 
@@ -21,6 +24,8 @@ public class climberSubsystem extends SubsystemBase {
   private CANSparkMax m_rightClimbMotor;
   private SparkPIDController m_PIDleftClimb;
   private SparkPIDController m_PIDrightClimb;
+  private RelativeEncoder m_encoderLeftClimbMotor;
+  // private RelativeEncoder m_encoderRightClimbMotor;
   private final DigitalInput m_leftHookSensor = new DigitalInput(2);
   private final DigitalInput m_rightHookSensor = new DigitalInput(3);
   private final DigitalInput m_leftBassSensor = new DigitalInput(4);
@@ -30,6 +35,9 @@ public class climberSubsystem extends SubsystemBase {
 
     m_leftClimbMotor = new CANSparkMax(climbConstants.leftClimbMotorCanId, MotorType.kBrushless);
     m_rightClimbMotor = new CANSparkMax(climbConstants.rightClimbMotorCanId, MotorType.kBrushless);
+
+    m_encoderLeftClimbMotor = m_leftClimbMotor.getEncoder();
+   // m_encoderRightClimbMotor = m_rightClimbMotor.getEncoder();
 
     m_PIDleftClimb = m_leftClimbMotor.getPIDController();
     m_PIDleftClimb.setP(1.0);
@@ -55,10 +63,24 @@ public class climberSubsystem extends SubsystemBase {
   public final boolean rightHookSensor(){
     return m_rightHookSensor.get();
   }    
+  public final boolean leftClimbMotorPos_0(){
+    return  (m_encoderLeftClimbMotor.getPosition()>-1) && (m_encoderLeftClimbMotor.getPosition()<1);
+  }
+  public final boolean leftClimbMotorPos_20(){
+    return  (m_encoderLeftClimbMotor.getPosition()>18) && (m_encoderLeftClimbMotor.getPosition()<22);
+  }
   
 
-  public Command climb(){
-    return runOnce(()->{});
+  public void climbUp(){
+    m_PIDleftClimb.setReference(20,ControlType.kPosition);
+    m_PIDrightClimb.setReference(-20,ControlType.kPosition);
+
+  }
+
+  public void climbDown(){
+    m_PIDleftClimb.setReference(-20,ControlType.kPosition);
+    m_PIDrightClimb.setReference(20,ControlType.kPosition);
+
   }
 
   public Command leftHookIsTouching(){

@@ -5,35 +5,32 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.intakeWheels;
+import frc.robot.subsystems.armSubsystem;
 
+public class ArmPreClimbPosition extends Command {
+  private final armSubsystem m_armSubsystem;
 
-public class IntakeWheelsIn extends Command {
-  /** Creates a new IntakeWheelsIn. */
-  
-  private final intakeWheels m_intakeWheels;
-
-
-  public IntakeWheelsIn(intakeWheels intake_wheels) {
+  /** Creates a new AmpPreClimbPosition. */
+  public ArmPreClimbPosition(armSubsystem arm_subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-  this.m_intakeWheels = intake_wheels;
+    this.m_armSubsystem = arm_subsystem;
 
-  addRequirements(m_intakeWheels);
-  
+    addRequirements(m_armSubsystem);
+
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
 
-    m_intakeWheels.intake_wheels_in();
+    m_armSubsystem.pre_climb_position();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-        m_intakeWheels.intake_wheels_in();
+
+    m_armSubsystem.pre_climb_position();
   }
 
   // Called once the command ends or is interrupted.
@@ -43,6 +40,6 @@ public class IntakeWheelsIn extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_intakeWheels.intake_wheels_speed_3000();
-}
+    return false;
+  }
 }

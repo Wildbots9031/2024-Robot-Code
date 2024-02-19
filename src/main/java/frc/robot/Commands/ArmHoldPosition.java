@@ -16,8 +16,7 @@ public class ArmHoldPosition extends Command {
     this.m_armSubsystem = arm_subsystem;
 
     addRequirements(m_armSubsystem);
-    
-  }
+    }
 
   // Called when the command is initially scheduled.
   @Override

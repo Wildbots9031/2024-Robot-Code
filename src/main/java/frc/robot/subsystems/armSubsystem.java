@@ -10,11 +10,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
-import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants.armConstants;
 import com.revrobotics.RelativeEncoder;
-//import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
 
 public class armSubsystem extends SubsystemBase {
   /** Creates a new armSubsystem. */
@@ -23,7 +20,6 @@ public class armSubsystem extends SubsystemBase {
   private CANSparkMax m_intakeRotationMotor;
   private SparkPIDController m_PIDArmRotation;
   private SparkPIDController m_PIDIntakeRotation;
-  private final DigitalInput m_climberSensor = new DigitalInput(1);
   private RelativeEncoder m_encoderArmRotationMotor;
 
   
@@ -45,107 +41,72 @@ public class armSubsystem extends SubsystemBase {
    m_PIDIntakeRotation.setI(0);
    m_PIDIntakeRotation.setD(0);
 
-
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
-//public final boolean getAsBoolean()
 
-  public final boolean climbingButton(){
-    return m_climberSensor.get();
-  }
-
+  //set range for exiting Intake Position
   public final boolean arm_at_neg_14(){
     return (m_encoderArmRotationMotor.getPosition() > -15) && (m_encoderArmRotationMotor.getPosition() < -12);
   }
 
+  //set range for exiting Amp Position
   public final boolean arm_at_pos_60(){
-    return (m_encoderArmRotationMotor.getPosition() > 55) && (m_encoderArmRotationMotor.getPosition() < 65);
+    return (m_encoderArmRotationMotor.getPosition() > 57) && (m_encoderArmRotationMotor.getPosition() < 62);
   }
 
-  public void intake_position(){
+  //set range for Shooting Position
+  public final boolean arm_at_pos40(){
+    return (m_encoderArmRotationMotor.getPosition()> 37) && (m_encoderArmRotationMotor.getPosition()< 42);
+  }
 
-m_PIDArmRotation.setReference(-13,ControlType.kPosition);
-m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
+  //set range for Trap Scoring
+  public final boolean arm_at_pos50(){
+    return (m_encoderArmRotationMotor.getPosition()> 47) && (m_encoderArmRotationMotor.getPosition()< 52);
+  }
 
-    };
-  
+    public void intake_position(){
 
-  
- 
-    public final boolean retract_note(){
-      return ((m_encoderArmRotationMotor.getPosition() > -15) && (m_encoderArmRotationMotor.getPosition() < -12));
-      }
-
-    
- /*    m_PIDIntakeRotation.setReference(1,ControlType.kPosition);
-    m_PIDArmRotation.setReference(1,ControlType.kPosition); 
-    m_PIDTelescope.setReference(0,ControlType.kPosition);
-    m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
-    m_PIDRightShooter.setReference(0,ControlType.kVelocity);
-    */
-
-     
-      
-      
-
-    
-
-  
-  
-
-   public void hold_position(){
-
-  m_PIDArmRotation.setReference(0,ControlType.kPosition);
-  m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
+    m_PIDArmRotation.setReference(-13,ControlType.kPosition);
+    m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
 
     };
   
+  public void hold_position(){
 
+    m_PIDArmRotation.setReference(0,ControlType.kPosition);
+    m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
 
+    };
+  
   public void amp_position(){
 
-m_PIDArmRotation.setReference(60,ControlType.kPosition);
-m_PIDIntakeRotation.setReference(-3,ControlType.kPosition);
+    m_PIDArmRotation.setReference(60,ControlType.kPosition);
+    m_PIDIntakeRotation.setReference(-3,ControlType.kPosition);
 
     };
   
-
-   public void score_note_amp(){
-    };
-  
-
   public void shoot_position(){
 
-m_PIDArmRotation.setReference(60,ControlType.kPosition);
-m_PIDIntakeRotation.setReference(-1,ControlType.kPosition);
+    m_PIDArmRotation.setReference(40,ControlType.kPosition);
+    m_PIDIntakeRotation.setReference(-1,ControlType.kPosition);
 
     };
   
- 
-   public void shoot_note(){
-    
-    };
-  
+   public void trap_position(){
 
-  public void trap_position(){
-
-m_PIDArmRotation.setReference(1,ControlType.kPosition);
-m_PIDIntakeRotation.setReference(1,ControlType.kPosition);
+    m_PIDArmRotation.setReference(50,ControlType.kPosition);
+    m_PIDIntakeRotation.setReference(1,ControlType.kPosition);
 
     };
   
-
-   public void score_note_trap(){
-  }
-
   public void pre_climb_position(){
 
-m_PIDArmRotation.setReference(80,ControlType.kPosition);
-m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
+    m_PIDArmRotation.setReference(80,ControlType.kPosition);
+    m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
 
     };
   
