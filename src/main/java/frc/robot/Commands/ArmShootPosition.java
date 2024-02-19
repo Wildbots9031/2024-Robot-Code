@@ -5,29 +5,31 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.telescope;
+import frc.robot.subsystems.armSubsystem;
 
+public class ArmShootPosition extends Command {
+  private final armSubsystem m_armSubsystem; 
 
-public class IntakeTelescopeCommand extends Command {
-  /** Creates a new IntakeTeliscopeCommand. */
-  private final telescope m_telescope;
-
-  public IntakeTelescopeCommand(telescope m_telescope) {
+  /** Creates a new ArmShootPosition. */
+  public ArmShootPosition(armSubsystem arm_subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.m_telescope = m_telescope;
-    addRequirements(m_telescope);
-  }
+    this.m_armSubsystem = arm_subsystem;
+
+    addRequirements(m_armSubsystem);
+    }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_telescope.telescope_intake_position(); 
+
+    m_armSubsystem.shoot_position();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-        m_telescope.telescope_intake_position(); 
+
+    m_armSubsystem.shoot_position();
   }
 
   // Called once the command ends or is interrupted.
@@ -37,6 +39,6 @@ public class IntakeTelescopeCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_telescope.telescope_at_neg_9();
+    return false;
   }
 }

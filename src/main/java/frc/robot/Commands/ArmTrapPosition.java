@@ -5,30 +5,30 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.telescope;
+import frc.robot.subsystems.armSubsystem;
 
+public class ArmTrapPosition extends Command {
+  private final armSubsystem m_armSubsystem;
 
-public class HoldTelescopeCommand extends Command {
-  /** Creates a new HoldTelescopeCommand. */
-  private final telescope m_telescope;
-  
-  public HoldTelescopeCommand(telescope m_telescope) {
+  /** Creates a new ArmTrapPosition. */
+  public ArmTrapPosition(armSubsystem arm_subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.m_telescope = m_telescope;
-    addRequirements(m_telescope);
-  
+    this.m_armSubsystem = arm_subsystem;
+
+    addRequirements(m_armSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_telescope.telescope_hold_postion();
+
+    m_armSubsystem.trap_position();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-        m_telescope.telescope_hold_postion();
+    m_armSubsystem.trap_position();
   }
 
   // Called once the command ends or is interrupted.
@@ -38,6 +38,6 @@ public class HoldTelescopeCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_telescope.telescope_at_0();
+    return false;
   }
 }

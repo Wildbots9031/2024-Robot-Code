@@ -4,20 +4,30 @@
 
 package frc.robot.Commands;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.armSubsystem;
+import frc.robot.subsystems.intakeWheels;
 import frc.robot.subsystems.telescope;
+
+
+
+
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ParallelAmpCommand extends ParallelCommandGroup {
-  /** Creates a new ParallelAmpCommand. */
-  public ParallelAmpCommand(armSubsystem m_ArmSubsystem,telescope m_Telescope) {
+
+
+
+public class HoldCommandGroup extends SequentialCommandGroup {
+  /** Creates a new SequentialHoldCommand. */
+  public HoldCommandGroup(armSubsystem m_ArmSubsystem, telescope m_Telescope, intakeWheels m_IntakeWheels) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new AmpTelescopePostion(m_Telescope),
-    new ArmAmpPosition(m_ArmSubsystem)
+      
+    addCommands(new RepostionNote(m_IntakeWheels),
+      new TelescopeHoldCommand(m_Telescope),
+    new ArmHoldPosition(m_ArmSubsystem)
     );
   }
 }

@@ -5,35 +5,31 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.intakeWheels;
+import frc.robot.subsystems.climberSubsystem;
 
+public class ClimbUp extends Command {
+  private final climberSubsystem m_ClimberSubsystem;
 
-public class IntakeWheelsIn extends Command {
-  /** Creates a new IntakeWheelsIn. */
-  
-  private final intakeWheels m_intakeWheels;
-
-
-  public IntakeWheelsIn(intakeWheels intake_wheels) {
+  /** Creates a new ClimbUp. */
+  public ClimbUp(climberSubsystem climberSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-  this.m_intakeWheels = intake_wheels;
+    this.m_ClimberSubsystem = climberSubsystem;
 
-  addRequirements(m_intakeWheels);
-  
+    addRequirements(m_ClimberSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
 
-    m_intakeWheels.intake_wheels_in();
+    m_ClimberSubsystem.climbUp();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-        m_intakeWheels.intake_wheels_in();
+
+    m_ClimberSubsystem.climbUp();
   }
 
   // Called once the command ends or is interrupted.
@@ -43,6 +39,6 @@ public class IntakeWheelsIn extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_intakeWheels.intake_wheels_speed_3000();
-}
+    return false;
+  }
 }

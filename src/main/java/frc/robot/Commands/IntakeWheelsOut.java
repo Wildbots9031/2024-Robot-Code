@@ -12,8 +12,7 @@ public class IntakeWheelsOut extends Command {
 
     private final intakeWheels m_intakeWheels;
   
-  
-  public IntakeWheelsOut(intakeWheels intake_wheels) {
+    public IntakeWheelsOut(intakeWheels intake_wheels) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_intakeWheels = intake_wheels;
 

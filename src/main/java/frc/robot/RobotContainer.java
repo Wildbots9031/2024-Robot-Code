@@ -15,23 +15,25 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.Commands.ArmHoldPosition;
-import frc.robot.Commands.ArmIntakeCommand;
-import frc.robot.Commands.HoldTelescopeCommand;
+import frc.robot.Commands.ShootNote;
+import frc.robot.Commands.ShooterPositionGroup;
+import frc.robot.Commands.AmpCommandGroup;
+import frc.robot.Commands.PreClimbCommandGroup;
+import frc.robot.Commands.HoldCommandGroup;
+import frc.robot.Commands.IntakeCommandGroup;
+import frc.robot.Commands.TrapCommandGroup;
 import frc.robot.Commands.IntakeWheelsOut;
-import frc.robot.Commands.ParallelAmpCommand;
-import frc.robot.Commands.RepostionNote;
-import frc.robot.Commands.SequentialHoldCommand;
-import frc.robot.Commands.SequentialIntakeCommandGroup;
-//import edu.wpi.first.wpilibj.PS5Controller.Button;
+import frc.robot.Commands.ClimbUp;
+import frc.robot.Commands.ClimbDown;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.armSubsystem;
 import frc.robot.subsystems.intakeWheels;
+import frc.robot.subsystems.shooterWheels;
 import frc.robot.subsystems.telescope;
-//import frc.robot.subsystems.climberSubsystem;
+import frc.robot.subsystems.climberSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -62,13 +64,13 @@ public class RobotContainer {
   private final armSubsystem m_ArmSubsystem = new armSubsystem();
   private final telescope m_Telescope = new telescope();
   private final intakeWheels m_IntakeWheels = new intakeWheels();
- // private final climberSubsystem m_ClimberSubsystem = new climberSubsystem();
+  private final shooterWheels m_ShooterWheels = new shooterWheels();
+  private final climberSubsystem m_ClimberSubsystem = new climberSubsystem();
   private final SendableChooser<Command> autoChooser;
  
   
 
   // The driver's controller
-  //XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
    CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
 
   
@@ -110,11 +112,24 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-//    if (new Trigger(m_ArmSubsystem::retract_note).equals(true) && (new Trigger(m_IntakeWheels::holdingNote).equals(true))) {new SequentialHoldCommand(m_ArmSubsystem, m_Telescope, m_IntakeWheels);
- //   }
 
-   // new Trigger((m_ArmSubsystem::retract_note).onTrue) &&  (m_IntakeWheels::holdingNote))(new SequentialHoldCommand(m_ArmSubsystem, m_Telescope, m_IntakeWheels));
-   /*  new Trigger(m_ClimberSubsystem::leftHookSensor);//.onTrue(m_ClimberSubsystem.leftHookIsTouching());
+  //Set up Limit to Swith to Move to Hold
+    if (new Trigger(m_ArmSubsystem::arm_at_neg_14).getAsBoolean() && (new Trigger(m_IntakeWheels::holdingNote).getAsBoolean())) 
+      {new HoldCommandGroup(m_ArmSubsystem, m_Telescope, m_IntakeWheels);
+    }
+  //Set up Right Trigger to Shoot Note into Speaker
+   if (new Trigger(m_driverController.rightTrigger()).getAsBoolean() && (new Trigger(m_ArmSubsystem::arm_at_pos40).getAsBoolean())) 
+      {new ShootNote(m_IntakeWheels, m_ShooterWheels);}
+
+  //Set up Right Trigger to Score Amp
+   if (new Trigger(m_driverController.rightTrigger()).getAsBoolean() && (new Trigger(m_ArmSubsystem::arm_at_pos_60).getAsBoolean())) 
+      {new IntakeWheelsOut(m_IntakeWheels);}
+
+  //Set up Right Trigger to Score Trap
+    if (new Trigger(m_driverController.rightTrigger()).getAsBoolean() && (new Trigger(m_ArmSubsystem::arm_at_pos50).getAsBoolean())) 
+      {new IntakeWheelsOut(m_IntakeWheels);}
+
+      /*  new Trigger(m_ClimberSubsystem::leftHookSensor);//.onTrue(m_ClimberSubsystem.leftHookIsTouching());
     new Trigger(m_ClimberSubsystem::rightHookSensor);//.onTrue(m_ClimberSubsystem.rightHookIsTouching());
 
     if (new Trigger(m_ClimberSubsystem::rightHookSensor).equals(true)&&(new Trigger(m_ClimberSubsystem::leftHookSensor).equals(false))&&(m_driverController.a().equals(false))){
@@ -130,22 +145,34 @@ public class RobotContainer {
     } 
     */
   
-   //if (m_driverController.a().equals(true)&&(m_driverController.b().equals(true))){};
+//Set up Y Button to Move to Shoot Position
+    m_driverController.y().onTrue(new ShooterPositionGroup(m_ArmSubsystem, m_Telescope));
 
-   // m_driverController.y().onTrue(m_ArmSubsystem.shoot_position());
-    m_driverController.b().onTrue(new SequentialHoldCommand(m_ArmSubsystem, m_Telescope, m_IntakeWheels));
-  //  m_driverController.x().onTrue(m_ArmSubsystem.pre_climb_position());
-    m_driverController.a().onTrue(new ParallelAmpCommand(m_ArmSubsystem, m_Telescope));
-    m_driverController.start().onTrue(new SequentialIntakeCommandGroup(m_ArmSubsystem, m_Telescope, m_IntakeWheels));
-//    m_driverController.leftTrigger().onTrue(m_ArmSubsystem.shoot_note());
-    m_driverController.rightTrigger().onTrue(new IntakeWheelsOut(m_IntakeWheels));
+//Set up B Button to Move to Hold Position
+    m_driverController.b().onTrue(new HoldCommandGroup(m_ArmSubsystem, m_Telescope, m_IntakeWheels));
 
-    //new JoystickButton(m_driverController, Button.kR1.value)
-       // .whileTrue(new RunCommand(
-      //     () -> m_robotDrive.setX(),
-      //      m_robotDrive));
+//Set up X Button to Move to Pre-Climb Position
+    m_driverController.x().onTrue(new PreClimbCommandGroup(m_ArmSubsystem, m_Telescope));
 
-          
+//Set up A Button to Move to Amp Position
+    m_driverController.a().onTrue(new AmpCommandGroup(m_ArmSubsystem, m_Telescope));
+
+//Set up Start BUtton to Move to Intake Position
+    m_driverController.start().onTrue(new IntakeCommandGroup(m_ArmSubsystem, m_Telescope, m_IntakeWheels));
+
+//Set up Left Trigger to Move to Trap Position
+    m_driverController.leftTrigger().onTrue(new TrapCommandGroup(m_ArmSubsystem, m_Telescope));
+
+//Set up Left Bumper to Climb Up
+    m_driverController.leftBumper().onTrue(new ClimbUp(m_ClimberSubsystem));
+
+//Set up Right Bumper to Climb Down
+    m_driverController.rightBumper().onTrue(new ClimbDown(m_ClimberSubsystem));
+
+
+   
+
+           
 
             SmartDashboard.putData("Example Auto", new PathPlannerAuto("Example Auto"));
 

@@ -12,11 +12,12 @@ import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import frc.robot.Constants.armConstants;
 import edu.wpi.first.wpilibj.DigitalInput;
+import com.revrobotics.RelativeEncoder;
  
 
 public class intakeWheels extends SubsystemBase {
   /** Creates a new intakeWheels. */
- 
+ private RelativeEncoder m_intakeEncoder;
   private CANSparkMax m_intakePickupWheels;
   private SparkPIDController m_PIDIntakePickUpWheels;
   private final DigitalInput m_noteSensor = new DigitalInput(0);
@@ -25,10 +26,11 @@ public class intakeWheels extends SubsystemBase {
   public intakeWheels() {
 
     m_intakePickupWheels = new CANSparkMax(armConstants.intakePickUpWheels, MotorType.kBrushless);
+    m_intakeEncoder = m_intakePickupWheels.getEncoder();
    
     m_PIDIntakePickUpWheels = m_intakePickupWheels.getPIDController();
 
-    m_PIDIntakePickUpWheels.setP(1.0);
+    m_PIDIntakePickUpWheels.setP(.2);
     m_PIDIntakePickUpWheels.setI(0);
     m_PIDIntakePickUpWheels.setD(0);
  
@@ -39,13 +41,17 @@ public class intakeWheels extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  public final boolean intake_wheels_speed_3000(){
+      return (m_intakeEncoder.getVelocity()>2900);
+  }
+
   public void intake_wheels_in(){
-    m_PIDIntakePickUpWheels.setReference(1000,ControlType.kVelocity);
+    m_PIDIntakePickUpWheels.setReference(3000,ControlType.kVelocity);
   };
 
 
   public void intake_wheels_out(){
-    m_PIDIntakePickUpWheels.setReference(-1000,ControlType.kVelocity);
+    m_PIDIntakePickUpWheels.setReference(-3000,ControlType.kVelocity);
   };
 
 
