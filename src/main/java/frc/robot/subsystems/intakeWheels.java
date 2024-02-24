@@ -46,17 +46,20 @@ public class intakeWheels extends SubsystemBase {
   }
 
   public void intake_wheels_in(){
-    m_PIDIntakePickUpWheels.setReference(3000,ControlType.kVelocity);
+    m_intakePickupWheels.set(-1);
+   // m_PIDIntakePickUpWheels.setReference(3000,ControlType.kVelocity);
   };
 
 
   public void intake_wheels_out(){
-    m_PIDIntakePickUpWheels.setReference(-3000,ControlType.kVelocity);
+    //m_PIDIntakePickUpWheels.setReference(-3000,ControlType.kVelocity);
+    m_intakePickupWheels.set(0.7);
   };
 
 
   public void intake_wheels_off(){
-    m_PIDIntakePickUpWheels.setReference(0,ControlType.kVelocity);
+   // m_PIDIntakePickUpWheels.setReference(0,ControlType.kVelocity);
+    m_intakePickupWheels.set(0);
   };
 
 

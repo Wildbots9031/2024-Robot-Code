@@ -7,27 +7,18 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.armSubsystem;
 import frc.robot.subsystems.telescope;
-import frc.robot.subsystems.intakeWheels;
+
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-
-
-public class IntakeCommandGroup extends SequentialCommandGroup {
-  /** Creates a new SequentialIntakeCommandGroup. */
-  public IntakeCommandGroup(armSubsystem m_ArmSubsystem,telescope m_Telescope, intakeWheels m_IntakeWheels) {
+public class OverrideHoldCommandGroup extends SequentialCommandGroup {
+  /** Creates a new OverrideHoldCommandGroup. */
+  public OverrideHoldCommandGroup(armSubsystem m_ArmSubsystem, telescope m_Telescope) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-     new TelescopeHoldCommand(m_Telescope),
-     new ArmIntakeCommand(m_ArmSubsystem),
-     new TelescopeIntakeCommand(m_Telescope),
-     new IntakeWheelsIn(m_IntakeWheels),
-     new TelescopeHoldCommand(m_Telescope),
-     new RepostionNote(m_IntakeWheels),
-     new ArmHoldPosition(m_ArmSubsystem)
-
-     );
+    addCommands(      new TelescopeHoldCommand(m_Telescope),
+    new ArmHoldPosition(m_ArmSubsystem)
+    );
   }
 }

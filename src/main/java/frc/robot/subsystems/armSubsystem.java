@@ -33,7 +33,7 @@ public class armSubsystem extends SubsystemBase {
    m_PIDIntakeRotation = m_intakeRotationMotor.getPIDController();
    m_encoderArmRotationMotor = m_armRotationMotor.getEncoder();
 
-   m_PIDArmRotation.setP(.1);
+   m_PIDArmRotation.setP(.2);
    m_PIDArmRotation.setI(0);
    m_PIDArmRotation.setD(0);
 
@@ -55,7 +55,7 @@ public class armSubsystem extends SubsystemBase {
 
   //set range for exiting Amp Position
   public final boolean arm_at_pos_60(){
-    return (m_encoderArmRotationMotor.getPosition() > 57) && (m_encoderArmRotationMotor.getPosition() < 62);
+    return (m_encoderArmRotationMotor.getPosition() > 43) && (m_encoderArmRotationMotor.getPosition() < 70);
   }
 
   //set range for Shooting Position
@@ -67,6 +67,12 @@ public class armSubsystem extends SubsystemBase {
   public final boolean arm_at_pos50(){
     return (m_encoderArmRotationMotor.getPosition()> 47) && (m_encoderArmRotationMotor.getPosition()< 52);
   }
+   
+  //Set range for zero
+  public final boolean arm_at_pos0(){
+    return (m_encoderArmRotationMotor.getPosition()> -2) && (m_encoderArmRotationMotor.getPosition()< 2);
+  }
+
 
     public void intake_position(){
 
@@ -84,28 +90,29 @@ public class armSubsystem extends SubsystemBase {
   
   public void amp_position(){
 
-    m_PIDArmRotation.setReference(60,ControlType.kPosition);
-    m_PIDIntakeRotation.setReference(-3,ControlType.kPosition);
+    m_PIDArmRotation.setReference(65,ControlType.kPosition);
+    m_PIDIntakeRotation.setReference(-2.5,ControlType.kPosition);
 
     };
   
   public void shoot_position(){
 
-    m_PIDArmRotation.setReference(40,ControlType.kPosition);
+    m_PIDArmRotation.setReference(15,ControlType.kPosition);
     m_PIDIntakeRotation.setReference(-1,ControlType.kPosition);
+  
 
     };
   
    public void trap_position(){
 
     m_PIDArmRotation.setReference(50,ControlType.kPosition);
-    m_PIDIntakeRotation.setReference(1,ControlType.kPosition);
+    m_PIDIntakeRotation.setReference(-1,ControlType.kPosition);
 
     };
   
   public void pre_climb_position(){
 
-    m_PIDArmRotation.setReference(80,ControlType.kPosition);
+    m_PIDArmRotation.setReference(95,ControlType.kPosition);
     m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
 
     };

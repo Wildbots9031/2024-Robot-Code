@@ -40,12 +40,12 @@ public class climberSubsystem extends SubsystemBase {
    // m_encoderRightClimbMotor = m_rightClimbMotor.getEncoder();
 
     m_PIDleftClimb = m_leftClimbMotor.getPIDController();
-    m_PIDleftClimb.setP(1.0);
+    m_PIDleftClimb.setP(.1);
     m_PIDleftClimb.setI(0);
     m_PIDleftClimb.setD(0);
 
     m_PIDrightClimb = m_rightClimbMotor.getPIDController();
-    m_PIDrightClimb.setP(1.0);
+    m_PIDrightClimb.setP(.1);
     m_PIDrightClimb.setI(0);
     m_PIDrightClimb.setD(0);
 
@@ -73,13 +73,13 @@ public class climberSubsystem extends SubsystemBase {
 
   public void climbUp(){
     m_PIDleftClimb.setReference(20,ControlType.kPosition);
-    m_PIDrightClimb.setReference(-20,ControlType.kPosition);
+    m_PIDrightClimb.setReference(20,ControlType.kPosition);
 
   }
 
   public void climbDown(){
     m_PIDleftClimb.setReference(-20,ControlType.kPosition);
-    m_PIDrightClimb.setReference(20,ControlType.kPosition);
+    m_PIDrightClimb.setReference(-20,ControlType.kPosition);
 
   }
 

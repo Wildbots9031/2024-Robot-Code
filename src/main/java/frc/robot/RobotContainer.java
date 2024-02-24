@@ -19,12 +19,17 @@ import frc.robot.Commands.ShootNote;
 import frc.robot.Commands.ShooterPositionGroup;
 import frc.robot.Commands.AmpCommandGroup;
 import frc.robot.Commands.PreClimbCommandGroup;
+import frc.robot.Commands.RepostionNote;
 import frc.robot.Commands.HoldCommandGroup;
 import frc.robot.Commands.IntakeCommandGroup;
 import frc.robot.Commands.TrapCommandGroup;
 import frc.robot.Commands.IntakeWheelsOut;
 import frc.robot.Commands.ClimbUp;
 import frc.robot.Commands.ClimbDown;
+import frc.robot.Commands.OverrideHoldCommandGroup;
+import frc.robot.Commands.IntakeWheelsInWithButton;
+import frc.robot.Commands.IntakeWheelsOffWithButton;
+import frc.robot.Commands.TurnOffAllWheels;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
@@ -45,6 +50,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -59,7 +65,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems
+  // The robot's subsystems. Subsystem Initialization
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final armSubsystem m_ArmSubsystem = new armSubsystem();
   private final telescope m_Telescope = new telescope();
@@ -67,11 +73,11 @@ public class RobotContainer {
   private final shooterWheels m_ShooterWheels = new shooterWheels();
   private final climberSubsystem m_ClimberSubsystem = new climberSubsystem();
   private final SendableChooser<Command> autoChooser;
- 
-  
 
+ 
   // The driver's controller
    CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
+   CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
 
   
  
@@ -80,11 +86,31 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+
+      //Register Commands
+
+ //  NamedCommands.registerCommand("exampleCommand", exampleSubsystem.exampleCommand());
+  NamedCommands.registerCommand("ShooterPositionGroup", new ShooterPositionGroup(m_ArmSubsystem,m_Telescope));
+  NamedCommands.registerCommand("ShootNote", new ShootNote(m_IntakeWheels, m_ShooterWheels));
+  NamedCommands.registerCommand("IntakeCommandGroup", new IntakeCommandGroup(m_ArmSubsystem, m_Telescope, m_IntakeWheels));
+  NamedCommands.registerCommand("RepostionNote", new RepostionNote(m_IntakeWheels));
+  NamedCommands.registerCommand("AmpCommandGroup", new AmpCommandGroup(m_ArmSubsystem,m_Telescope));
+  NamedCommands.registerCommand("OverrideHoldCommandGroup", new OverrideHoldCommandGroup(m_ArmSubsystem,m_Telescope));
+
+
+
     // Configure the button bindings
     configureButtonBindings();
 
     autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
     SmartDashboard.putData("Auto Mode", autoChooser);
+
+
+    //Autos
+    SmartDashboard.putData("Auto 1", new PathPlannerAuto("Auto 1"));
+    SmartDashboard.putData("Auto 2", new PathPlannerAuto("Auto 2"));
+
+
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
@@ -113,22 +139,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-  //Set up Limit to Swith to Move to Hold
-    if (new Trigger(m_ArmSubsystem::arm_at_neg_14).getAsBoolean() && (new Trigger(m_IntakeWheels::holdingNote).getAsBoolean())) 
-      {new HoldCommandGroup(m_ArmSubsystem, m_Telescope, m_IntakeWheels);
-    }
-  //Set up Right Trigger to Shoot Note into Speaker
-   if (new Trigger(m_driverController.rightTrigger()).getAsBoolean() && (new Trigger(m_ArmSubsystem::arm_at_pos40).getAsBoolean())) 
-      {new ShootNote(m_IntakeWheels, m_ShooterWheels);}
-
-  //Set up Right Trigger to Score Amp
-   if (new Trigger(m_driverController.rightTrigger()).getAsBoolean() && (new Trigger(m_ArmSubsystem::arm_at_pos_60).getAsBoolean())) 
-      {new IntakeWheelsOut(m_IntakeWheels);}
-
-  //Set up Right Trigger to Score Trap
-    if (new Trigger(m_driverController.rightTrigger()).getAsBoolean() && (new Trigger(m_ArmSubsystem::arm_at_pos50).getAsBoolean())) 
-      {new IntakeWheelsOut(m_IntakeWheels);}
-
+  
       /*  new Trigger(m_ClimberSubsystem::leftHookSensor);//.onTrue(m_ClimberSubsystem.leftHookIsTouching());
     new Trigger(m_ClimberSubsystem::rightHookSensor);//.onTrue(m_ClimberSubsystem.rightHookIsTouching());
 
@@ -146,35 +157,37 @@ public class RobotContainer {
     */
   
 //Set up Y Button to Move to Shoot Position
-    m_driverController.y().onTrue(new ShooterPositionGroup(m_ArmSubsystem, m_Telescope));
+    m_operatorController.y().onTrue(new ShooterPositionGroup(m_ArmSubsystem, m_Telescope));
 
 //Set up B Button to Move to Hold Position
-    m_driverController.b().onTrue(new HoldCommandGroup(m_ArmSubsystem, m_Telescope, m_IntakeWheels));
+    m_driverController.b().onTrue(new OverrideHoldCommandGroup(m_ArmSubsystem, m_Telescope));
 
 //Set up X Button to Move to Pre-Climb Position
-    m_driverController.x().onTrue(new PreClimbCommandGroup(m_ArmSubsystem, m_Telescope));
+    m_operatorController.x().onTrue(new PreClimbCommandGroup(m_ArmSubsystem, m_Telescope));
 
 //Set up A Button to Move to Amp Position
-    m_driverController.a().onTrue(new AmpCommandGroup(m_ArmSubsystem, m_Telescope));
+    m_operatorController.a().onTrue(new AmpCommandGroup(m_ArmSubsystem, m_Telescope));
 
 //Set up Start BUtton to Move to Intake Position
-    m_driverController.start().onTrue(new IntakeCommandGroup(m_ArmSubsystem, m_Telescope, m_IntakeWheels));
+    m_operatorController.start().onTrue(new IntakeCommandGroup(m_ArmSubsystem, m_Telescope, m_IntakeWheels));
 
 //Set up Left Trigger to Move to Trap Position
-    m_driverController.leftTrigger().onTrue(new TrapCommandGroup(m_ArmSubsystem, m_Telescope));
+    m_operatorController.b().onTrue(new TrapCommandGroup(m_ArmSubsystem, m_Telescope));
 
-//Set up Left Bumper to Climb Up
+//Set up Left Bumper to Get Off Chain
     m_driverController.leftBumper().onTrue(new ClimbUp(m_ClimberSubsystem));
 
-//Set up Right Bumper to Climb Down
+//Set up Right Bumper to Climb
     m_driverController.rightBumper().onTrue(new ClimbDown(m_ClimberSubsystem));
 
+ // Set up Right Trigger to Reverse Intake Wheels(Score in Amp)
+   m_driverController.leftTrigger().whileTrue(new IntakeWheelsOut(m_IntakeWheels));
 
-   
+  //Setup left trigger on operator to shoot note
+   m_driverController.rightTrigger().whileTrue(new ShootNote(m_IntakeWheels, m_ShooterWheels));
 
-           
-
-            SmartDashboard.putData("Example Auto", new PathPlannerAuto("Example Auto"));
+  //set up Turn Off All Wheels
+   m_driverController.a().onTrue(new TurnOffAllWheels(m_ShooterWheels, m_IntakeWheels));
 
     // Add a button to run pathfinding commands to SmartDashboard
     SmartDashboard.putData("Pathfind to Pickup Pos", AutoBuilder.pathfindToPose(
@@ -228,12 +241,18 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // Create config for trajectory
+
+         
+          return autoChooser.getSelected();  
+        
+   /*  // Create config for trajectory
     TrajectoryConfig config = new TrajectoryConfig(
         AutoConstants.kMaxSpeedMetersPerSecond,
         AutoConstants.kMaxAccelerationMetersPerSecondSquared)
         // Add kinematics to ensure max speed is actually obeyed
         .setKinematics(DriveConstants.kDriveKinematics);
+
+
 
     // An example trajectory to follow. All units in meters.
     Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
@@ -266,6 +285,7 @@ public class RobotContainer {
 
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
+    */
   }
 
 }

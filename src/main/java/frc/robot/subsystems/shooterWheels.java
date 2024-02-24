@@ -13,6 +13,7 @@ import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import frc.robot.Constants.armConstants;
 import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class shooterWheels extends SubsystemBase {
@@ -25,7 +26,7 @@ public class shooterWheels extends SubsystemBase {
   private SparkPIDController m_PIDLeftShooter;
 
   private RelativeEncoder m_encoderRightShootMotor;
-
+  public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxRPM;
 
   public shooterWheels() {
 
@@ -35,30 +36,40 @@ public class shooterWheels extends SubsystemBase {
     m_PIDRightShooter = m_rightShooterMotor.getPIDController();
     m_PIDLeftShooter = m_leftShooterMotor.getPIDController();
 
-    m_PIDRightShooter.setP(.2);
+    m_encoderRightShootMotor = m_rightShooterMotor.getEncoder();
+
+    m_PIDRightShooter.setP(0);
     m_PIDRightShooter.setI(0);
     m_PIDRightShooter.setD(0);
+    m_PIDRightShooter.setFF(.00017);
+    m_PIDRightShooter.setOutputRange( -1, 1);
+    
  
-    m_PIDLeftShooter.setP(.2);
+    m_PIDLeftShooter.setP(0);
     m_PIDLeftShooter.setI(0);
-    m_PIDLeftShooter.setD(0);   
+    m_PIDLeftShooter.setD(0); 
+    m_PIDLeftShooter.setFF(0.00017);
+    m_PIDLeftShooter.setOutputRange(-1, 1);  
  
  
   }
 
   @Override
   public void periodic() {
+
+SmartDashboard.putNumber("ProcessVariable", m_encoderRightShootMotor.getVelocity());
+
     // This method will be called once per scheduler run
   }
-// set range for exiting ShooterWheelsOn
+ //set range for exiting ShooterWheelsOn
 public final boolean shooterVelocity(){
-  return m_encoderRightShootMotor.getVelocity()>2800;
+  return m_encoderRightShootMotor.getVelocity()>4700;
 }
 
 public void shootOn() {
  
-  m_PIDLeftShooter.setReference(-3000,ControlType.kVelocity);
-  m_PIDRightShooter.setReference(3000,ControlType.kVelocity);
+  m_PIDLeftShooter.setReference(-5000,ControlType.kVelocity);
+  m_PIDRightShooter.setReference(5000,ControlType.kVelocity);
   
 }
 
@@ -68,5 +79,4 @@ public void shootOff() {
   m_PIDRightShooter.setReference(0,ControlType.kVelocity);
   
 }
-
 }

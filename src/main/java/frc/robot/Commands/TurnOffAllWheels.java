@@ -5,46 +5,49 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+
 import frc.robot.subsystems.intakeWheels;
+import frc.robot.subsystems.shooterWheels;
 
+public class TurnOffAllWheels extends Command {
+  /** Creates a new TurnOffAllWheels. */
 
-public class IntakeWheelsIn extends Command {
-  /** Creates a new IntakeWheelsIn. */
-  
-  private final intakeWheels m_intakeWheels;
+  private final shooterWheels m_ShooterWheels;
+  private final intakeWheels m_IntakeWheels;
 
-
-  public IntakeWheelsIn(intakeWheels intake_wheels) {
+  public TurnOffAllWheels(shooterWheels shooter_Wheels, intakeWheels intake_Wheels) {
     // Use addRequirements() here to declare subsystem dependencies.
-  this.m_intakeWheels = intake_wheels;
+this.m_ShooterWheels = shooter_Wheels;
+this.m_IntakeWheels = intake_Wheels;
 
-  addRequirements(m_intakeWheels);
-  
+addRequirements(m_ShooterWheels, m_IntakeWheels);
+
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
 
-    m_intakeWheels.intake_wheels_in();
+    m_IntakeWheels.intake_wheels_off();
+    m_ShooterWheels.shootOff();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-        m_intakeWheels.intake_wheels_in();
+
+    m_IntakeWheels.intake_wheels_off();
+    m_ShooterWheels.shootOff();
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_intakeWheels.intake_wheels_off();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !(m_intakeWheels.holdingNote());
-}
+    return false;
+  }
 }

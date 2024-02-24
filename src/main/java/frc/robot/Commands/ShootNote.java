@@ -18,8 +18,8 @@ public class ShootNote extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ShooterWheelsOn(m_ShooterWheels),
-      new IntakeWheelsIn(m_IntakeWheels),
-      new ShooterWheelsOff(m_ShooterWheels)
+      new IntakeWheelsIn(m_IntakeWheels)
+    //  new ShooterWheelsOff(m_ShooterWheels)
     );
   }
 }

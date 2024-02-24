@@ -8,24 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.0,
-        "y": 6.5
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 4.991222307694258,
-        "y": 3.946551915928368
-      },
-      "prevControl": {
-        "x": 5.877321319632858,
-        "y": 4.883772024709579
-      },
-      "nextControl": {
-        "x": 3.7732953069329804,
-        "y": 2.6583598958924024
+        "x": 1.9932481519810894,
+        "y": 5.09421389741173
       },
       "isLocked": false,
       "linkedName": null
@@ -33,11 +17,11 @@
     {
       "anchor": {
         "x": 2.0,
-        "y": 3.5718051464633596
+        "y": 6.604911811820771
       },
       "prevControl": {
-        "x": 1.75,
-        "y": 5.071805146463362
+        "x": 1.8946024710879668,
+        "y": 7.916525504948307
       },
       "nextControl": null,
       "isLocked": false,
@@ -49,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.65,
+      "waypointRelativePos": 0.0,
       "command": {
         "type": "sequential",
         "data": {
@@ -57,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "shoot"
+                "name": "IntakeCommandGroup"
               }
             }
           ]
@@ -78,6 +62,9 @@
   },
   "reversed": false,
   "folder": null,
-  "previewStartingState": null,
-  "useDefaultConstraints": false
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
 }
