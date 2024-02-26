@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
@@ -21,7 +22,6 @@ public class armSubsystem extends SubsystemBase {
   private SparkPIDController m_PIDArmRotation;
   private SparkPIDController m_PIDIntakeRotation;
   private RelativeEncoder m_encoderArmRotationMotor;
-
   
   public armSubsystem() {
 
@@ -53,10 +53,17 @@ public class armSubsystem extends SubsystemBase {
     return (m_encoderArmRotationMotor.getPosition() > -15) && (m_encoderArmRotationMotor.getPosition() < -12);
   }
 
+
   //set range for exiting Amp Position
   public final boolean arm_at_pos_60(){
     return (m_encoderArmRotationMotor.getPosition() > 43) && (m_encoderArmRotationMotor.getPosition() < 70);
   }
+
+public final boolean armEncoderPosition(){
+    return m_encoderArmRotationMotor.getPosition()==-14;
+}
+
+  
 
   //set range for Shooting Position
   public final boolean arm_at_pos40(){
@@ -83,10 +90,44 @@ public class armSubsystem extends SubsystemBase {
   
   public void hold_position(){
 
+
     m_PIDArmRotation.setReference(0,ControlType.kPosition);
     m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
 
     };
+  
+
+ /*  public Command total_intake_Position (){
+    return parallel(
+      run(
+         () ->
+        telescope_hold_postion(),
+        waitUntil(armEncoderPosition()).
+        andThen(() ->
+        intake_position()))
+
+
+    );
+  }
+ */
+   
+
+    
+ /*    m_PIDIntakeRotation.setReference(1,ControlType.kPosition);
+    m_PIDArmRotation.setReference(1,ControlType.kPosition); 
+    m_PIDTelescope.setReference(0,ControlType.kPosition);
+    m_PIDLeftShooter.setReference(0,ControlType.kVelocity);
+    m_PIDRightShooter.setReference(0,ControlType.kVelocity);
+    */
+
+     
+      
+      
+
+   
+
+
+    
   
   public void amp_position(){
 

@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+
 import edu.wpi.first.math.MathUtil;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -145,8 +146,30 @@ NamedCommands.registerCommand("ShooterWheelsOff", new ShooterWheelsOff(m_Shooter
     if (new Trigger(m_driverController.rightTrigger()).getAsBoolean() && (new Trigger(m_ArmSubsystem::arm_at_pos50).getAsBoolean())) 
       {new IntakeWheelsOut(m_IntakeWheels);}
 
+/*<<<<<<< HEAD
     //Set up Y Button to Move to Shoot Position
     m_operatorController.y().onTrue(new ShooterPositionGroup(m_ArmSubsystem, m_Telescope));
+=======
+    m_driverController.y().onTrue(m_ArmSubsystem.shoot_position());
+    m_driverController.b().onTrue(m_ArmSubsystem.hold_position());
+    m_driverController.x().onTrue(m_ArmSubsystem.pre_climb_position());
+    m_driverController.a().onTrue(m_ArmSubsystem.amp_position());
+<<<<<<< HEAD
+    
+    m_driverController.start().onTrue(
+      parallel(
+        
+            (m_ArmSubsystem.telescope_hold_postion()), 
+
+   waitUntil(m_ArmSubsystem.armEncoderPosition())
+    .andThen
+   
+            (m_ArmSubsystem.intake_position())));
+=======
+    m_driverController.start().onTrue(m_ArmSubsystem.telescope_hold_postion().andThen(m_ArmSubsystem.intake_position()).andThen(m_ArmSubsystem.telescope_intake_position()));
+    m_driverController.leftTrigger().onTrue(m_ArmSubsystem.shoot_note());
+//>>>>>>> a22d2001d93c830e2b7e16362d4efd228eaa7721
+//>>>>>>> b5bd453742da80ebbaee5b5b6f325afdeceb285f*/
 
 //Set up B Button to Move to Hold Position
     m_driverController.b().onTrue(new OverrideHoldCommandGroup(m_ArmSubsystem, m_Telescope));
@@ -230,6 +253,7 @@ NamedCommands.registerCommand("ShooterWheelsOff", new ShooterWheelsOff(m_Shooter
       AutoBuilder.followPath(path).schedule();
     }));
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
