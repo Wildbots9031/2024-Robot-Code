@@ -22,7 +22,6 @@ public class climberSubsystem extends SubsystemBase {
   */
   private CANSparkMax m_leftClimbMotor;
   private CANSparkMax m_rightClimbMotor;
-  private SparkPIDController m_PIDleftClimb;
   private SparkPIDController m_PIDrightClimb;
   private RelativeEncoder m_encoderLeftClimbMotor;
   // private RelativeEncoder m_encoderRightClimbMotor;
@@ -39,15 +38,18 @@ public class climberSubsystem extends SubsystemBase {
     m_encoderLeftClimbMotor = m_leftClimbMotor.getEncoder();
    // m_encoderRightClimbMotor = m_rightClimbMotor.getEncoder();
 
-    m_PIDleftClimb = m_leftClimbMotor.getPIDController();
+   m_leftClimbMotor.follow(m_rightClimbMotor,true);
+
+   /*  m_PIDleftClimb = m_leftClimbMotor.getPIDController();
     m_PIDleftClimb.setP(.1);
     m_PIDleftClimb.setI(0);
-    m_PIDleftClimb.setD(0);
+    m_PIDleftClimb.setD(0);*/
 
     m_PIDrightClimb = m_rightClimbMotor.getPIDController();
     m_PIDrightClimb.setP(.1);
     m_PIDrightClimb.setI(0);
     m_PIDrightClimb.setD(0);
+    m_PIDrightClimb.setOutputRange(-.7, .7);
 
   }
 
@@ -72,14 +74,14 @@ public class climberSubsystem extends SubsystemBase {
   
 
   public void climbUp(){
-    m_PIDleftClimb.setReference(20,ControlType.kPosition);
-    m_PIDrightClimb.setReference(20,ControlType.kPosition);
+   // m_PIDleftClimb.setReference(0,ControlType.kPosition);
+    m_PIDrightClimb.setReference(30,ControlType.kPosition);
 
   }
 
   public void climbDown(){
-    m_PIDleftClimb.setReference(-20,ControlType.kPosition);
-    m_PIDrightClimb.setReference(-20,ControlType.kPosition);
+    //m_PIDleftClimb.setReference(-220,ControlType.kPosition);
+    m_PIDrightClimb.setReference(-160,ControlType.kPosition);
 
   }
 

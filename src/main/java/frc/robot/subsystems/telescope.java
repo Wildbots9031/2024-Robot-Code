@@ -48,6 +48,10 @@ public class telescope extends SubsystemBase {
     return (m_encoderTelescopeMotor.getPosition()>=-1) && (m_encoderTelescopeMotor.getPosition()<=2) ;
   }
 
+    public final boolean telescope_at_neg_4(){
+    return (m_encoderTelescopeMotor.getPosition()>=-5) && (m_encoderTelescopeMotor.getPosition()<=-2) ;
+  }
+
   public void telescope_intake_position(){
     m_PIDTelescope.setReference(-9,ControlType.kPosition); 
    };

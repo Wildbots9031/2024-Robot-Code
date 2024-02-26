@@ -17,6 +17,7 @@ public class PreClimbCommandGroup extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      //new ArmHoldPosition(m_ArmSubsystem),
       new ArmPreClimbPosition(m_ArmSubsystem),
       new TelescopePreClimbPosition(m_Telescope)
     );

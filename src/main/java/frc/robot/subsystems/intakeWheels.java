@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkBase.ControlType;
 import frc.robot.Constants.armConstants;
 import edu.wpi.first.wpilibj.DigitalInput;
 import com.revrobotics.RelativeEncoder;
@@ -46,7 +45,7 @@ public class intakeWheels extends SubsystemBase {
   }
 
   public void intake_wheels_in(){
-    m_intakePickupWheels.set(-1);
+    m_intakePickupWheels.set(-.7);
    // m_PIDIntakePickUpWheels.setReference(3000,ControlType.kVelocity);
   };
 

@@ -1,0 +1,73 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.454549670868242,
+      "y": 5.550936522700434
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "OverrideHoldCommandGroup"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "pick up note two"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AmpCommandGroup"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "shoot note two"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OverrideHoldCommandGroup"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "pick up note three"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "shoot note three"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "pick up note four"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "shoot note four"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

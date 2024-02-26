@@ -97,8 +97,8 @@ public class armSubsystem extends SubsystemBase {
   
   public void shoot_position(){
 
-    m_PIDArmRotation.setReference(15,ControlType.kPosition);
-    m_PIDIntakeRotation.setReference(-1,ControlType.kPosition);
+    m_PIDArmRotation.setReference(40,ControlType.kPosition);
+    m_PIDIntakeRotation.setReference(-2.5,ControlType.kPosition);
   
 
     };
@@ -112,7 +112,7 @@ public class armSubsystem extends SubsystemBase {
   
   public void pre_climb_position(){
 
-    m_PIDArmRotation.setReference(95,ControlType.kPosition);
+    m_PIDArmRotation.setReference(92,ControlType.kPosition);
     m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
 
     };

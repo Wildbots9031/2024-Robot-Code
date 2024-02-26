@@ -63,13 +63,17 @@ SmartDashboard.putNumber("ProcessVariable", m_encoderRightShootMotor.getVelocity
   }
  //set range for exiting ShooterWheelsOn
 public final boolean shooterVelocity(){
-  return m_encoderRightShootMotor.getVelocity()>4700;
+  return m_encoderRightShootMotor.getVelocity()>5000;
+}
+
+public final boolean shooterTurnOff(){
+  return m_encoderRightShootMotor.getVelocity()<200;
 }
 
 public void shootOn() {
  
-  m_PIDLeftShooter.setReference(-5000,ControlType.kVelocity);
-  m_PIDRightShooter.setReference(5000,ControlType.kVelocity);
+  m_PIDLeftShooter.setReference(-6000,ControlType.kVelocity);
+  m_PIDRightShooter.setReference(6000,ControlType.kVelocity);
   
 }
 
