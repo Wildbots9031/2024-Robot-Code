@@ -5,44 +5,45 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
+//import edu.wpi.first.math.controller.PIDController;
+//import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+//import edu.wpi.first.math.trajectory.Trajectory;
+//import edu.wpi.first.math.trajectory.TrajectoryConfig;
+//import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.Commands.ShootNote;
-import frc.robot.Commands.ShooterPositionGroup;
-import frc.robot.Commands.AmpCommandGroup;
-import frc.robot.Commands.PreClimbCommandGroup;
-import frc.robot.Commands.RepostionNote;
-import frc.robot.Commands.HoldCommandGroup;
-import frc.robot.Commands.IntakeCommandGroup;
-import frc.robot.Commands.TrapCommandGroup;
-import frc.robot.Commands.IntakeWheelsOut;
-import frc.robot.Commands.ClimbUp;
-import frc.robot.Commands.ClimbDown;
-import frc.robot.Commands.OverrideHoldCommandGroup;
-import frc.robot.Commands.IntakeWheelsInWithButton;
-import frc.robot.Commands.IntakeWheelsOffWithButton;
-import frc.robot.Commands.TurnOffAllWheels;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
+import frc.robot.Commands.arm_position_commands.AmpCommandGroup;
+import frc.robot.Commands.arm_position_commands.OverrideHoldCommandGroup;
+import frc.robot.Commands.climb.ClimbDown;
+import frc.robot.Commands.climb.ClimbUp;
+//import frc.robot.Commands.command_groups.HoldCommandGroup;
+import frc.robot.Commands.command_groups.IntakeCommandGroup;
+import frc.robot.Commands.command_groups.PreClimbCommandGroup;
+import frc.robot.Commands.command_groups.ShooterPositionGroup;
+import frc.robot.Commands.command_groups.TrapCommandGroup;
+//import frc.robot.Commands.intake_commands.IntakeWheelsInWithButton;
+//import frc.robot.Commands.intake_commands.IntakeWheelsOffWithButton;
+import frc.robot.Commands.intake_commands.IntakeWheelsOut;
+import frc.robot.Commands.intake_commands.RepostionNote;
+import frc.robot.Commands.shoot_commands.ShootNote;
+import frc.robot.Commands.shoot_commands.TurnOffAllWheels;
+//import frc.robot.Constants.AutoConstants;
+//import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.armSubsystem;
-import frc.robot.subsystems.intakeWheels;
-import frc.robot.subsystems.shooterWheels;
-import frc.robot.subsystems.telescope;
-import frc.robot.subsystems.climberSubsystem;
+import frc.robot.subsystems.movments.DriveSubsystem;
+import frc.robot.subsystems.movments.armSubsystem;
+import frc.robot.subsystems.movments.climberSubsystem;
+import frc.robot.subsystems.movments.intakeWheels;
+import frc.robot.subsystems.movments.shooterWheels;
+import frc.robot.subsystems.movments.telescope;
+import frc.robot.subsystems.vision.LimeLightObject;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+//import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -55,7 +56,8 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+//import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Commands.limelight.autoAlign;
 
 
 /*
@@ -72,6 +74,7 @@ public class RobotContainer {
   private final intakeWheels m_IntakeWheels = new intakeWheels();
   private final shooterWheels m_ShooterWheels = new shooterWheels();
   private final climberSubsystem m_ClimberSubsystem = new climberSubsystem();
+  private final LimeLightObject m_limelightObject = new LimeLightObject();
   private final SendableChooser<Command> autoChooser;
 
  
@@ -155,6 +158,9 @@ public class RobotContainer {
       m_ClimberSubsystem.climb();
     } 
     */
+
+//set up Y button to auto align
+    m_driverController.y().whileTrue(new autoAlign(m_limelightObject, m_robotDrive));
   
 //Set up Y Button to Move to Shoot Position
     m_operatorController.y().onTrue(new ShooterPositionGroup(m_ArmSubsystem, m_Telescope));

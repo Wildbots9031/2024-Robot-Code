@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import frc.lib.util.limelightOffset;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -33,6 +34,15 @@ public final class Constants {
     public static final double kDirectionSlewRate = 1.2; // radians per second
     public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
     public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
+
+    public static final double kMaxDriveVEL = 6.58;
+    public static final double kMaxRotVEL = 3 * 2 * Math.PI;
+
+    public static final double kDriveLimiter = kMaxDriveVEL / 5.5;
+    public static final double kRotationLimiter = //
+            kMaxRotVEL / 5;
+    public static final double kDriveAccelerationLimiter = 5;
+    public static final double kRotationAccelerationLimiter = 7.5;
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(26.5);
@@ -64,6 +74,35 @@ public final class Constants {
 
     public static final boolean kGyroReversed = true;
   }
+  public static final class limelightConstants {
+
+
+    /**
+     * PID constants for the autoalign
+     */
+     public static final double kPdrive = 0.1;
+     public static final double kIdrive = 0;
+     public static final double kDdrive = 0;
+
+     public static final double kPstrafe = 0.08;
+     public static final double kIstrafe = 0;
+     public static final double kDstrafe = 0;
+
+     public static final double kProtation = 0.04;
+     public static final double kIrotation = 0;
+     public static final double kDrotation = 0;
+
+        public static final class aprilTag{
+
+            public static double driveOffset = 5.4;
+            public static double strafeOffset = -1;
+            public static double rotationOffset = 17;
+
+            public static final limelightOffset offsets =  
+        new limelightOffset(driveOffset, strafeOffset, rotationOffset);
+
+        }
+      }
 
   public static final class ModuleConstants {
     // The MAXSwerve module can be configured with one of three pinion gears: 12T, 13T, or 14T.
@@ -122,6 +161,7 @@ public final class Constants {
 
     public static final int kDriverControllerPort = 0;
     public static final double kDriveDeadband = 0.05;
+    
   }
 
   public static final class AutoConstants {
