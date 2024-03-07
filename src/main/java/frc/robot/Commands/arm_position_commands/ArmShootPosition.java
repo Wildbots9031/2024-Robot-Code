@@ -39,6 +39,6 @@ public class ArmShootPosition extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_armSubsystem.arm_at_pos18();
   }
 }

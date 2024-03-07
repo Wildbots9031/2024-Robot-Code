@@ -53,9 +53,7 @@ public class DriveSubsystem extends SubsystemBase {
   // The gyro sensor
   private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
-  private static DriveSubsystem instance;
-
-  // Slew rate filter variables for controlling lateral acceleration
+   // Slew rate filter variables for controlling lateral acceleration
   private double m_currentRotation = 0.0;
   private double m_currentTranslationDir = 0.0;
   private double m_currentTranslationMag = 0.0;
@@ -291,13 +289,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
-  public static DriveSubsystem getInstance() {
-    if(instance == null){
-        instance = new DriveSubsystem();
-    }
-    return instance;
-}
-
+  
     public DriveSubsystem() {
   
 

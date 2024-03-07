@@ -50,17 +50,22 @@ public class armSubsystem extends SubsystemBase {
 
   //set range for exiting Intake Position
   public final boolean arm_at_neg_14(){
-    return (m_encoderArmRotationMotor.getPosition() > -15) && (m_encoderArmRotationMotor.getPosition() < -12);
+    return (m_encoderArmRotationMotor.getPosition() > -13) && (m_encoderArmRotationMotor.getPosition() < -11);
   }
 
   //set range for exiting Amp Position
-  public final boolean arm_at_pos_60(){
-    return (m_encoderArmRotationMotor.getPosition() > 43) && (m_encoderArmRotationMotor.getPosition() < 70);
+  public final boolean arm_at_pos_50(){
+    return (m_encoderArmRotationMotor.getPosition() > 47) && (m_encoderArmRotationMotor.getPosition() < 53);
+  }
+
+  //set range for hold position
+  public final boolean arm_at_65(){
+    return (m_encoderArmRotationMotor.getPosition() > 63) && (m_encoderArmRotationMotor.getPosition() < 68);
   }
 
   //set range for Shooting Position
-  public final boolean arm_at_pos40(){
-    return (m_encoderArmRotationMotor.getPosition()> 37) && (m_encoderArmRotationMotor.getPosition()< 42);
+  public final boolean arm_at_pos18(){
+    return (m_encoderArmRotationMotor.getPosition()> 17) && (m_encoderArmRotationMotor.getPosition()< 19);
   }
 
   //set range for Trap Scoring
@@ -87,7 +92,15 @@ public class armSubsystem extends SubsystemBase {
     m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
 
     };
-  
+
+ /*  public void override_hold_commands(){
+
+    m_PIDArmRotation.setReference(0,ControlType.kPosition);
+    m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
+
+    };
+  */
+
   public void amp_position(){
 
     m_PIDArmRotation.setReference(65,ControlType.kPosition);
@@ -97,11 +110,19 @@ public class armSubsystem extends SubsystemBase {
   
   public void shoot_position(){
 
-    m_PIDArmRotation.setReference(4,ControlType.kPosition);
-    m_PIDIntakeRotation.setReference(-1.3,ControlType.kPosition);
+    m_PIDArmRotation.setReference(18,ControlType.kPosition);
+    m_PIDIntakeRotation.setReference(-1.8,ControlType.kPosition);
   
 
     };
+
+    public void shoot_podium_position(){
+
+      m_PIDArmRotation.setReference(14,ControlType.kPosition);
+      m_PIDIntakeRotation.setReference(-1.2,ControlType.kPosition);
+    
+  
+      };
   
    public void trap_position(){
 

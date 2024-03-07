@@ -2,7 +2,11 @@
   "robotWidth": 0.9144,
   "robotLength": 0.91,
   "holonomicMode": true,
-  "pathFolders": [],
+  "pathFolders": [
+    "Amp Side Auto",
+    "Source Side Auto",
+    "Center Auto"
+  ],
   "autoFolders": [
     "New Folder"
   ],

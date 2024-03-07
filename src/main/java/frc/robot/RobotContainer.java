@@ -15,15 +15,17 @@ import edu.wpi.first.math.geometry.Translation2d;
 //import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.Commands.arm_position_commands.AmpCommandGroup;
-import frc.robot.Commands.arm_position_commands.OverrideHoldCommandGroup;
+import frc.robot.Commands.arm_position_commands.ArmShootPodiumPositon;
 import frc.robot.Commands.climb.ClimbDown;
 import frc.robot.Commands.climb.ClimbUp;
+import frc.robot.Commands.command_groups.AmpCommandGroup;
 //import frc.robot.Commands.command_groups.HoldCommandGroup;
 import frc.robot.Commands.command_groups.IntakeCommandGroup;
+import frc.robot.Commands.command_groups.OverrideHoldCommandGroup;
 import frc.robot.Commands.command_groups.PreClimbCommandGroup;
 import frc.robot.Commands.command_groups.ShooterPositionGroup;
 import frc.robot.Commands.command_groups.TrapCommandGroup;
+import frc.robot.Commands.intake_commands.IntakeWheelsOff;
 //import frc.robot.Commands.intake_commands.IntakeWheelsInWithButton;
 //import frc.robot.Commands.intake_commands.IntakeWheelsOffWithButton;
 import frc.robot.Commands.intake_commands.IntakeWheelsOut;
@@ -58,6 +60,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 //import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Commands.limelight.autoAlign;
+
 
 
 /*
@@ -99,8 +102,8 @@ public class RobotContainer {
   NamedCommands.registerCommand("RepostionNote", new RepostionNote(m_IntakeWheels));
   NamedCommands.registerCommand("AmpCommandGroup", new AmpCommandGroup(m_ArmSubsystem,m_Telescope));
   NamedCommands.registerCommand("OverrideHoldCommandGroup", new OverrideHoldCommandGroup(m_ArmSubsystem,m_Telescope));
-
-
+  NamedCommands.registerCommand("IntakeWheelsOff", new IntakeWheelsOff(m_IntakeWheels));
+  NamedCommands.registerCommand("TurnOffAllWheels", new TurnOffAllWheels(m_ShooterWheels, m_IntakeWheels));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -194,6 +197,9 @@ public class RobotContainer {
 
   //set up Turn Off All Wheels
    m_driverController.a().onTrue(new TurnOffAllWheels(m_ShooterWheels, m_IntakeWheels));
+
+  //set up left bumper to shoot note from podium
+   m_operatorController.leftBumper().onTrue(new ArmShootPodiumPositon(m_ArmSubsystem));
 
     // Add a button to run pathfinding commands to SmartDashboard
     SmartDashboard.putData("Pathfind to Pickup Pos", AutoBuilder.pathfindToPose(

@@ -37,12 +37,13 @@ public class IntakeWheelsInWithButton extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_intakeWheels.intake_wheels_off();
+  //  m_intakeWheels.intake_wheels_off();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    //return false;
+    return (m_intakeWheels.holdingNote());
   }
 }

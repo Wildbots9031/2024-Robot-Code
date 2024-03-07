@@ -40,16 +40,16 @@ public class telescope extends SubsystemBase {
 
   // Set range to exit for Intake Telescope
   public final boolean telescope_at_neg_9(){
-    return (m_encoderTelescopeMotor.getPosition()>=-10) && (m_encoderTelescopeMotor.getPosition()<=-8);
+    return (m_encoderTelescopeMotor.getPosition()>=-10) && (m_encoderTelescopeMotor.getPosition()<=-7);
   }
 
   // Set range to exit for Hold Telescope
     public final boolean telescope_at_0(){
-    return (m_encoderTelescopeMotor.getPosition()>=-1) && (m_encoderTelescopeMotor.getPosition()<=2) ;
+    return (m_encoderTelescopeMotor.getPosition()>=-1) && (m_encoderTelescopeMotor.getPosition()<=1) ;
   }
 
   public void telescope_intake_position(){
-    m_PIDTelescope.setReference(-9,ControlType.kPosition); 
+    m_PIDTelescope.setReference(-8,ControlType.kPosition); 
    };
   
 

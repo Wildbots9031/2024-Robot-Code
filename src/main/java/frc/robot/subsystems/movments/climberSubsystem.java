@@ -72,14 +72,14 @@ public class climberSubsystem extends SubsystemBase {
   
 
   public void climbUp(){
-    m_PIDleftClimb.setReference(20,ControlType.kPosition);
-    m_PIDrightClimb.setReference(20,ControlType.kPosition);
+    m_PIDleftClimb.setReference(90,ControlType.kPosition);
+    m_PIDrightClimb.setReference(90,ControlType.kPosition);
 
   }
 
   public void climbDown(){
-    m_PIDleftClimb.setReference(-20,ControlType.kPosition);
-    m_PIDrightClimb.setReference(-20,ControlType.kPosition);
+    m_PIDleftClimb.setReference(-120,ControlType.kPosition);
+    m_PIDrightClimb.setReference(-120,ControlType.kPosition);
 
   }
 

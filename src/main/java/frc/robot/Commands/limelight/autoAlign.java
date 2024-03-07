@@ -38,9 +38,9 @@ public class autoAlign extends Command {
      * @param limelight Instance for the limelight
      * @param alignToAprilTag It will be aligning to april tag or reflective tape
      */
-    public autoAlign(LimeLightObject m_limelightObject, DriveSubsystem m_robotDrive){
+  public autoAlign(LimeLightObject m_limelightObject, DriveSubsystem m_robotDrive){
 
-        this.swerve = DriveSubsystem.getInstance();
+        this.swerve = m_robotDrive;
         this.limelight = PhotonLL.getInstance();
 
         /**
@@ -75,7 +75,7 @@ public class autoAlign extends Command {
         /**
          * Offsets for the limelight
          */
-        //this.offsets = limelight.getOffsets(alingToAprilTag);  
+        //this.offsets = limelight.getOffsets(alignToAprilTag);  
 
         this.driveOffset = 2.1;
         this.strafeOffset = -0.2;
@@ -111,7 +111,7 @@ public class autoAlign extends Command {
          * If there is a seen target, calculate the PIDs velocities,
          * otherwise, rotate so the robot can search the target
          */
-        if(limelight.hasValueTargets()){
+       if(limelight.hasValueTargets()){
 
             velForward = drivePID.calculate(limelight.getArea(), driveOffset);
             velStrafe = strafePID.calculate(limelight.getXDistance(), strafeOffset);
@@ -162,4 +162,4 @@ public class autoAlign extends Command {
          return false;
      }
     
-    }  
+    } 
