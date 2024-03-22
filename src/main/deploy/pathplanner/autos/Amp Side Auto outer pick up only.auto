@@ -3,9 +3,9 @@
   "startingPose": {
     "position": {
       "x": 0.79,
-      "y": 4.4
+      "y": 6.72
     },
-    "rotation": -60.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -42,6 +42,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -54,16 +60,10 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Step 1 source"
+                  "pathName": "Amp Step 2"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Step 2 source"
           }
         },
         {
@@ -103,15 +103,39 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Step 3 source"
+                  "pathName": "Amp Step 3"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterPositionGroup"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNote"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.1
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "TurnOffAllWheels"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "outside",
   "choreoAuto": false
 }

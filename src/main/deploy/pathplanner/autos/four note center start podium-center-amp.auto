@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.79,
-      "y": 6.72
+      "x": 1.454549670868242,
+      "y": 5.550936522700434
     },
-    "rotation": 60.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -54,10 +54,71 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Amp Step 1"
+                  "pathName": "pick up note four"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "shoot note four"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterPositionGroup"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNote"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.1
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "TurnOffAllWheels"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeCommandGroup"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 2.0
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "pick up note three"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "shoot note three"
           }
         },
         {
@@ -97,53 +158,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Amp Step 2"
+                  "pathName": "pick up note two"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "ShooterPositionGroup"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootNote"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.1
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "TurnOffAllWheels"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeCommandGroup"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Amp Step 3"
-                }
-              }
-            ]
+            "pathName": "shoot note two"
           }
         },
         {
@@ -173,6 +197,6 @@
       ]
     }
   },
-  "folder": "outside",
+  "folder": "center",
   "choreoAuto": false
 }

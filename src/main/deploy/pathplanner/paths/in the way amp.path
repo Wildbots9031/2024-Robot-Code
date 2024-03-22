@@ -3,41 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.79,
-        "y": 6.72
+        "x": 0.6924444618120023,
+        "y": 6.719388054160724
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7778084502116325,
-        "y": 6.837789026382982
+        "x": 1.3732635157578024,
+        "y": 8.702643559133271
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.27025654051308,
-        "y": 7.4598028796628215
+        "x": 8.289990426135384,
+        "y": 6.719388054160724
       },
       "prevControl": {
-        "x": 7.2702565405130795,
-        "y": 7.4598028796628215
+        "x": 5.3299075828927736,
+        "y": 6.778589711025621
       },
       "nextControl": {
-        "x": 9.27025654051308,
-        "y": 7.4598028796628215
+        "x": 10.299857493130835,
+        "y": 6.679190712820785
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.79,
-        "y": 6.72
+        "x": 6.888884547000549,
+        "y": 7.23246908032282
       },
       "prevControl": {
-        "x": 1.5607258834807642,
-        "y": 6.867442103338914
+        "x": 7.6190383150003935,
+        "y": 8.071159219241565
+      },
+      "nextControl": {
+        "x": 6.4431259182891365,
+        "y": 6.720449033829983
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.289990426135384,
+        "y": 5.79189542994475
+      },
+      "prevControl": {
+        "x": 6.287001035541219,
+        "y": 5.416951603134021
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,7 +62,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
+      "waypointRelativePos": 0.3,
       "rotationDegrees": 0,
       "rotateFast": false
     }
@@ -61,7 +77,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 60.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,

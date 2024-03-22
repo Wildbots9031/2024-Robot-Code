@@ -4,7 +4,7 @@
  * {@MÆTH}
  */
 
-package frc.robot.Commands.limelight;
+/*package frc.robot.Commands.limelight;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -38,7 +38,7 @@ public class autoAlign extends Command {
      * @param limelight Instance for the limelight
      * @param alignToAprilTag It will be aligning to april tag or reflective tape
      */
-  public autoAlign(LimeLightObject m_limelightObject, DriveSubsystem m_robotDrive){
+  /*public autoAlign(LimeLightObject m_limelightObject, DriveSubsystem m_robotDrive){
 
         this.swerve = m_robotDrive;
         this.limelight = PhotonLL.getInstance();
@@ -47,14 +47,14 @@ public class autoAlign extends Command {
          * Limiters for acceleration and a better moving of the robot
          * 
          */
-        this.xLimiter = new SlewRateLimiter(DriveConstants.kDriveAccelerationLimiter);
+       /* this.xLimiter = new SlewRateLimiter(DriveConstants.kDriveAccelerationLimiter);
         this.yLimiter = new SlewRateLimiter(DriveConstants.kDriveAccelerationLimiter);
         this.giroLimiter = new SlewRateLimiter(DriveConstants.kRotationAccelerationLimiter);
 
         /**
          * PID Controllers for the align
          */
-        this.drivePID = new PIDController(
+        /*this.drivePID = new PIDController(
             limelightConstants.kPdrive, 
             limelightConstants.kIdrive, 
             limelightConstants.kDdrive);
@@ -77,7 +77,7 @@ public class autoAlign extends Command {
          */
         //this.offsets = limelight.getOffsets(alignToAprilTag);  
 
-        this.driveOffset = 2.1;
+       /*  this.driveOffset = 2.1;
         this.strafeOffset = -0.2;
         this.rotationOffset = 10.2;
 
@@ -92,7 +92,7 @@ public class autoAlign extends Command {
         /**
          * Start a camera server so we can visualize the limelight on the Shuffleboard
          */
-        CameraServer.startAutomaticCapture();
+      /*   CameraServer.startAutomaticCapture();
          
      }
  
@@ -111,7 +111,7 @@ public class autoAlign extends Command {
          * If there is a seen target, calculate the PIDs velocities,
          * otherwise, rotate so the robot can search the target
          */
-       if(limelight.hasValueTargets()){
+    /*    if(limelight.hasValueTargets()){
 
             velForward = drivePID.calculate(limelight.getArea(), driveOffset);
             velStrafe = strafePID.calculate(limelight.getXDistance(), strafeOffset);
@@ -162,4 +162,4 @@ public class autoAlign extends Command {
          return false;
      }
     
-    } 
+    } */

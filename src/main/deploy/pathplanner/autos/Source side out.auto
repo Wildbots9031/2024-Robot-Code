@@ -1,0 +1,55 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.79,
+      "y": 4.4
+    },
+    "rotation": -60.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "OverrideHoldCommandGroup"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterPositionGroup"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootNote"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.1
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "TurnOffAllWheels"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "out of the way"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "outside",
+  "choreoAuto": false
+}

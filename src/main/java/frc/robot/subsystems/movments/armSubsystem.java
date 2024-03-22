@@ -37,7 +37,7 @@ public class armSubsystem extends SubsystemBase {
    m_PIDArmRotation.setI(0);
    m_PIDArmRotation.setD(0);
 
-   m_PIDIntakeRotation.setP(.5);
+   m_PIDIntakeRotation.setP(.6);
    m_PIDIntakeRotation.setI(0);
    m_PIDIntakeRotation.setD(0);
 
@@ -126,14 +126,14 @@ public class armSubsystem extends SubsystemBase {
   
    public void trap_position(){
 
-    m_PIDArmRotation.setReference(50,ControlType.kPosition);
-    m_PIDIntakeRotation.setReference(-1,ControlType.kPosition);
+    m_PIDArmRotation.setReference(80,ControlType.kPosition);
+    m_PIDIntakeRotation.setReference(-6,ControlType.kPosition);
 
     };
   
   public void pre_climb_position(){
 
-    m_PIDArmRotation.setReference(95,ControlType.kPosition);
+    m_PIDArmRotation.setReference(90,ControlType.kPosition);
     m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
 
     };

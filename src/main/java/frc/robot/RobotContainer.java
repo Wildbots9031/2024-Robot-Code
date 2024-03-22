@@ -59,7 +59,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 //import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Commands.limelight.autoAlign;
+//import frc.robot.Commands.limelight.autoAlign;
 
 
 
@@ -163,7 +163,7 @@ public class RobotContainer {
     */
 
 //set up Y button to auto align
-    m_driverController.y().whileTrue(new autoAlign(m_limelightObject, m_robotDrive));
+  //  m_driverController.y().whileTrue(new autoAlign(m_limelightObject, m_robotDrive));
   
 //Set up Y Button to Move to Shoot Position
     m_operatorController.y().onTrue(new ShooterPositionGroup(m_ArmSubsystem, m_Telescope));
