@@ -33,7 +33,7 @@ public class armSubsystem extends SubsystemBase {
    m_PIDIntakeRotation = m_intakeRotationMotor.getPIDController();
    m_encoderArmRotationMotor = m_armRotationMotor.getEncoder();
 
-   m_PIDArmRotation.setP(.1);
+   m_PIDArmRotation.setP(.07);
    m_PIDArmRotation.setI(0);
    m_PIDArmRotation.setD(0);
 
@@ -60,7 +60,7 @@ public class armSubsystem extends SubsystemBase {
 
   //set range for hold position
   public final boolean arm_at_65(){
-    return (m_encoderArmRotationMotor.getPosition() > 63) && (m_encoderArmRotationMotor.getPosition() < 68);
+    return (m_encoderArmRotationMotor.getPosition() > 48) && (m_encoderArmRotationMotor.getPosition() < 52);
   }
 
   //set range for Shooting Position
@@ -88,7 +88,7 @@ public class armSubsystem extends SubsystemBase {
   
   public void hold_position(){
 
-    m_PIDArmRotation.setReference(65,ControlType.kPosition);
+    m_PIDArmRotation.setReference(50,ControlType.kPosition);
     m_PIDIntakeRotation.setReference(0,ControlType.kPosition);
 
     };
